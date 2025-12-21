@@ -2,6 +2,9 @@ import { useEffect, useRef } from "react";
 import bus from "../assets/bus.svg";
 import "../styles/scrollpath.css";
 
+// Mobile check hook or simple CSS suppression is typically better.
+// We will use CSS to hide it on mobile as requested.
+
 export default function ScrollPath() {
   const busRef = useRef(null);
 
@@ -29,23 +32,16 @@ export default function ScrollPath() {
       <svg id="svgPath" viewBox="0 0 1200 6000" width="100%" height="6000px" className="path-svg">
         <path
           id="thePath"
-          d="M600,100 C600,300 800,500 600,700
-             S400,900 600,1100
-             S800,1300 600,1500
-             S400,1700 600,1900
-             S800,2100 600,2300
-             S400,2500 600,2700
-             S800,2900 600,3100
-             S400,3300 600,3500
-             S800,3700 600,3900
-             S400,4100 600,4300
-             S800,4500 600,4700
-             S400,4900 600,5100
-             S800,5300 600,5500
-             S400,5700 600,5900"
+          d="M600,0 
+             C600,400 900,600 900,1000 
+             C900,1600 300,1800 300,2400
+             C300,3000 900,3200 900,3800
+             C900,4400 300,4600 300,5200
+             C300,5600 600,5800 600,6000"
           fill="none"
           stroke="#ddd"
           strokeWidth="4"
+          strokeDasharray="10,10"
         />
       </svg>
       <img

@@ -1,6 +1,6 @@
-export default function Section({ title, subtitle, children }) {
+export default function Section({ title, subtitle, children, className = "" }) {
   return (
-    <section style={{ minHeight: "100vh", padding: "6rem 2rem" }}>
+    <section className={`fade-in ${className}`} style={{ minHeight: "100vh", padding: "6rem 2rem" }}>
       <h2>{title}</h2>
       <h4>{subtitle}</h4>
       <div>{children}</div>

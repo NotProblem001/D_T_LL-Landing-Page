@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
   --primary-color: #0a1f44;
@@ -20,7 +20,7 @@ html {
 
 body {
   margin: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--light-bg);
   color: var(--text-color);
   line-height: 1.6;
@@ -41,6 +41,36 @@ section {
   padding: 4rem 3rem;
   transition: all 0.3s ease;
   position: relative;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.95);
+  /* Slight transparency for effect if needed, but mostly solid for readability */
+}
+
+/* ZigZag Layout System */
+.zigzag-container {
+  display: flex;
+  width: 100%;
+  gap: 2rem;
+  align-items: center;
+}
+
+.content-left {
+  flex-direction: row;
+}
+
+.content-right {
+  flex-direction: row-reverse;
+}
+
+.text-content {
+  flex: 1;
+  z-index: 20;
+}
+
+.spacer {
+  flex: 1;
+  /* This is where the bus passes */
+  min-height: 200px;
 }
 
 section:hover {
@@ -48,7 +78,12 @@ section:hover {
   box-shadow: 0 16px 48px var(--shadow-hover);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   color: var(--primary-color);
   margin-bottom: 1rem;
   font-weight: 600;
@@ -115,7 +150,8 @@ cite {
   font-style: normal;
 }
 
-button, .btn {
+button,
+.btn {
   background: var(--accent-color);
   color: var(--primary-color);
   border: none;
@@ -132,13 +168,16 @@ button, .btn {
   justify-content: center;
 }
 
-button:hover, .btn:hover {
+button:hover,
+.btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(251, 176, 52, 0.4);
   background: #e6a02e;
 }
 
-input, textarea, select {
+input,
+textarea,
+select {
   width: 100%;
   padding: 1rem;
   border: 2px solid #e1e5e9;
@@ -148,7 +187,9 @@ input, textarea, select {
   transition: border-color 0.3s ease;
 }
 
-input:focus, textarea:focus, select:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
   border-color: var(--accent-color);
   box-shadow: 0 0 0 3px rgba(251, 176, 52, 0.1);
@@ -223,7 +264,9 @@ footer a:hover {
     font-size: 2rem;
   }
 
-  .grid-2, .grid-3, .grid-4 {
+  .grid-2,
+  .grid-3,
+  .grid-4 {
     grid-template-columns: 1fr;
   }
 
@@ -231,11 +274,30 @@ footer a:hover {
     flex-direction: column;
   }
 
-  .scroll-bus {
-    width: 50px;
+  .scroll-bus,
+  #svgPath {
+    display: none !important;
   }
 
-  button, .btn {
+
+  button,
+  .btn {
+    width: 100%;
+  }
+
+  /* ZigZag Mobile Collapse */
+  .zigzag-container {
+    flex-direction: column !important;
+    /* Stack everything */
+    gap: 1rem;
+  }
+
+  .spacer {
+    display: none;
+    /* Hide spacer on mobile so path doesn't take up empty space */
+  }
+
+  .text-content {
     width: 100%;
   }
 }
@@ -261,7 +323,10 @@ footer a:hover {
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -270,7 +335,60 @@ footer a:hover {
 }
 
 /* Focus styles */
-button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible {
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
   outline: 2px solid var(--accent-color);
   outline-offset: 2px;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+/* Alternating section backgrounds */
+.section-alt {
+  background: linear-gradient(135deg, var(--light-bg) 0%, #e9ecef 100%);
+}
+
+.section-accent {
+  background: linear-gradient(135deg, #eaf1ff 0%, #d4e4ff 100%);
+}
+
+/* Gallery hover effects */
+.gallery-item {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.gallery-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+  transform: scale(1.1);
 }
