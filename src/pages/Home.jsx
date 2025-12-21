@@ -1,138 +1,150 @@
-import ScrollPath from "../components/ScrollPath";
 import Section from "../components/Section";
 import Header from "../components/Header";
+import ScrollBus from "../components/ScrollBus";
 
 export default function Home() {
   return (
     <>
       <Header />
-      <ScrollPath />
-      <main style={{ paddingTop: '80px' }}>
+      <main className="main-content">
+        <ScrollBus />
+        {/* Hero Section */}
         <Section id="inicio" className="hero-section">
-          <div className="zigzag-container content-left">
-            <div className="text-content">
-              <h1>Tu viaje, nuestra responsabilidad</h1>
-              <h3>Conectamos empresas y eventos con movilidad premium</h3>
-              <p>Somos una empresa líder en transporte profesional dedicada a conectar personas y lugares de manera segura y eficiente. Especializados en el transporte de trabajadores para empresas y en servicios para eventos sociales.</p>
-              <button className="btn" style={{ fontSize: '1.2rem', padding: '1.5rem 3rem' }}>Solicita tu traslado</button>
+          <div className="grid grid-2 items-center">
+            <div className="hero-text">
+              <h1 className="hero-title">
+                Tu viaje, <span className="text-accent">nuestra responsabilidad</span>
+              </h1>
+              <h3 className="hero-subtitle">
+                Conectamos empresas y eventos con movilidad premium y segura.
+              </h3>
+              <div className="flex hero-buttons">
+                <button className="btn-primary">Solicita tu traslado</button>
+                <button className="btn-secondary">Conoce más</button>
+              </div>
             </div>
-            <div className="spacer"></div>
+            <div className="hero-image-container">
+              <img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1471&q=80"
+                alt="Autobús Premium"
+                className="hero-image" />
+            </div>
           </div>
         </Section>
-        <Section id="servicios" className="section-alt">
-          <div className="zigzag-container content-right">
-            <div className="spacer"></div>
-            <div className="text-content">
-              <h2>Nuestros Servicios</h2>
-              <h4>Empresas y Eventos</h4>
 
+        {/* Servicios Section */}
+        <Section id="servicios" title="Nuestros Servicios" subtitle="Soluciones de transporte a tu medida" variant="offset">
+          <div className="grid grid-2">
+            <div className="card service-card">
+              <div className="service-icon">🏢</div>
               <h3>Transporte Empresarial</h3>
-              <p>Ofrecemos servicios de transporte seguro y eficiente para trabajadores de empresas. Nuestros vehículos están equipados con las últimas tecnologías de seguridad y comodidad, asegurando que tus empleados lleguen a tiempo y descansados.</p>
-              <ul>
-                <li>Traslados diarios y programados</li>
-                <li>Vehículos modernos y mantenidos</li>
-                <li>Conductores profesionales y capacitados</li>
-                <li>Seguimiento en tiempo real</li>
+              <p>Traslados seguros y puntuales para tu equipo. Garantiza la llegada a tiempo y descansada de tus colaboradores.</p>
+              <ul className="feature-list">
+                <li>Rutas optimizadas diarias</li>
+                <li>Unidades modernas y sanitizadas</li>
+                <li>Monitoreo en tiempo real</li>
               </ul>
+            </div>
+            <div className="card service-card">
+              <div className="service-icon">🎉</div>
+              <h3>Eventos Especiales</h3>
+              <p>Logística de transporte para bodas, congresos y celebraciones. La mejor experiencia para tus invitados.</p>
+              <ul className="feature-list">
+                <li>Coordinación logística completa</li>
+                <li>Vehículos ejecutivos y de lujo</li>
+                <li>Disponibilidad 24/7</li>
+              </ul>
+            </div>
+          </div>
+        </Section>
 
-              <h3>Servicios para Eventos</h3>
-              <p>Para bodas, fiestas, conferencias y cualquier evento especial, proporcionamos transporte elegante y puntual. Haz que tu evento sea inolvidable con nuestro servicio premium.</p>
-              <ul>
-                <li>Flotas de lujo disponibles</li>
-                <li>Coordinación completa del evento</li>
-                <li>Opciones personalizadas</li>
-                <li>Puntualidad garantizada</li>
-              </ul>
+        {/* Valoraciones Section */}
+        <Section id="valoraciones" title="Lo que dicen nuestros clientes" subtitle="Confianza respaldada por experiencias reales">
+          <div className="grid grid-3">
+            <div className="card review-card">
+              <p className="review-text">"Excelente servicio. Nuestro equipo llega puntual y seguro todos los días. Un aliado estratégico indispensable."</p>
+              <div className="review-author">María González</div>
+              <div className="review-role">Gerente RRHH, TechCorp</div>
+            </div>
+            <div className="card review-card">
+              <p className="review-text">"Para nuestra boda queríamos lo mejor, y 'Donde Te Llevo' superó las expectativas. Los choferes muy amables."</p>
+              <div className="review-author">Carlos Rodríguez</div>
+              <div className="review-role">Cliente Particular</div>
+            </div>
+            <div className="card review-card">
+              <p className="review-text">"Organización impecable para nuestro congreso anual. Movilizaron a 500 personas sin contratiempos."</p>
+              <div className="review-author">Ana Torres</div>
+              <div className="review-role">Event Planner</div>
             </div>
           </div>
         </Section>
-        <Section id="valoraciones">
-          <div className="zigzag-container content-left">
-            <div className="text-content">
-              <h2>Valoraciones</h2>
-              <h4>Lo que dicen nuestros clientes</h4>
-              <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-                <blockquote style={{ borderLeft: "4px solid #007bff", paddingLeft: "1rem", fontStyle: "italic" }}>
-                  "Excelente servicio. Siempre puntuales y muy profesionales. Han transportado a todo nuestro equipo durante meses sin ningún problema."
-                  <cite> - María González, Gerente de Recursos Humanos, TechCorp</cite>
-                </blockquote>
-                <blockquote style={{ borderLeft: "4px solid #007bff", paddingLeft: "1rem", fontStyle: "italic" }}>
-                  "Para nuestra boda, el servicio fue impecable. Los vehículos eran lujosos y el conductor muy atento. Recomendado al 100%."
-                  <cite> - Carlos Rodríguez, Novio</cite>
-                </blockquote>
-                <blockquote style={{ borderLeft: "4px solid #007bff", paddingLeft: "1rem", fontStyle: "italic" }}>
-                  "Más de 300 empresas han confiado en nosotros para sus necesidades de transporte. Únete a nuestros clientes satisfechos."
-                  <cite> - Equipo Donde Te Llevo</cite>
-                </blockquote>
-              </div>
-            </div>
-            <div className="spacer"></div>
+
+        {/* Galeria Section */}
+        <Section id="galeria" title="Nuestra Flota" subtitle="Confort y seguridad en cada viaje" variant="dark">
+          <div className="grid grid-4 gallery-grid">
+            <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Interior Bus" className="gallery-img" />
+            <img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bus Exterior" className="gallery-img" />
+            <img src="https://images.unsplash.com/photo-1494515855673-b8a2001e4a28?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Conductor Profesional" className="gallery-img" />
+            <img src="https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Viaje en carretera" className="gallery-img" />
           </div>
         </Section>
-        <Section id="galeria" className="section-accent">
-          <div className="zigzag-container content-right">
-            <div className="spacer"></div>
-            <div className="text-content">
-              <h2>Galería</h2>
-              <h4>Conócenos visualmente</h4>
-              <div className="grid grid-2">
-                <div className="gallery-item">
-                  <img src="https://via.placeholder.com/400x300/007bff/ffffff?text=Bus+Empresarial" alt="Bus empresarial" />
-                  <p>Transporte Empresarial</p>
-                </div>
-                <div className="gallery-item">
-                  <img src="https://via.placeholder.com/400x300/28a745/ffffff?text=Evento+Lujo" alt="Vehículo de lujo para eventos" />
-                  <p>Servicios para Eventos</p>
-                </div>
-                <div className="gallery-item">
-                  <img src="https://via.placeholder.com/400x300/dc3545/ffffff?text=Equipo+Profesional" alt="Nuestro equipo" />
-                  <p>Equipo Profesional</p>
-                </div>
-                <div className="gallery-item">
-                  <img src="https://via.placeholder.com/400x300/ffc107/000000?text=Cliente+Satisfecho" alt="Cliente feliz" />
-                  <p>Clientes Satisfechos</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </Section>
-        <Section title="Contáctanos" subtitle="Solicita tu servicio hoy" id="contacto">
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "2rem" }}>
-            <div style={{ flex: "1", minWidth: "250px" }}>
+
+        {/* Contacto Section */}
+        <Section id="contacto" title="Contáctanos" subtitle="Empieza tu próximo viaje con nosotros">
+          <div className="contact-container grid grid-2">
+            <div className="contact-info">
               <h3>Información de Contacto</h3>
-              <p><strong>📞 Teléfono:</strong> +1 (555) 123-4567</p>
-              <p><strong>✉️ Email:</strong> info@dondetelevo.com</p>
-              <p><strong>📍 Dirección:</strong> Calle Principal 123, Ciudad, País</p>
-              <p><strong>🕒 Horarios:</strong> Lunes a Viernes, 8:00 AM - 6:00 PM</p>
+              <p className="contact-desc">Estamos listos para atenderte.</p>
+              <div className="contact-details">
+                <div>
+                  <strong>📞 Teléfono</strong>
+                  <div className="contact-detail-text">+1 (555) 123-4567</div>
+                </div>
+                <div>
+                  <strong>✉️ Email</strong>
+                  <div className="contact-detail-text">info@dondetelevo.com</div>
+                </div>
+                <div>
+                  <strong>📍 Oficina</strong>
+                  <div className="contact-detail-text">Calle Principal 123, Ciudad</div>
+                </div>
+              </div>
             </div>
-            <form style={{ flex: "1", minWidth: "250px", display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <input type="text" placeholder="Tu nombre" required style={{ padding: "0.5rem", border: "1px solid #ccc", borderRadius: "4px" }} />
-              <input type="email" placeholder="Correo electrónico" required style={{ padding: "0.5rem", border: "1px solid #ccc", borderRadius: "4px" }} />
-              <input type="tel" placeholder="Teléfono" style={{ padding: "0.5rem", border: "1px solid #ccc", borderRadius: "4px" }} />
-              <select style={{ padding: "0.5rem", border: "1px solid #ccc", borderRadius: "4px" }}>
-                <option value="">Tipo de servicio</option>
-                <option value="empresarial">Transporte Empresarial</option>
-                <option value="evento">Servicio para Eventos</option>
-                <option value="otro">Otro</option>
-              </select>
-              <textarea placeholder="Cuéntanos más sobre tus necesidades" rows="4" style={{ padding: "0.5rem", border: "1px solid #ccc", borderRadius: "4px" }}></textarea>
-              <button type="submit" style={{ padding: "0.75rem", backgroundColor: "#007bff", color: "white", border: "none", borderRadius: "4px", cursor: "pointer" }}>Enviar Solicitud</button>
-            </form>
+            <div className="contact-form-wrapper">
+              <form className="contact-form flex flex-col">
+                <div className="grid grid-2 form-row">
+                  <input type="text" placeholder="Nombre" className="form-input" />
+                  <input type="text" placeholder="Apellido" className="form-input" />
+                </div>
+                <input type="email" placeholder="Correo electrónico" className="form-input" />
+                <select className="form-select">
+                  <option value="">¿Qué servicio te interesa?</option>
+                  <option value="empresarial">Transporte Empresarial</option>
+                  <option value="eventos">Eventos Sociales</option>
+                  <option value="otro">Otro</option>
+                </select>
+                <textarea rows="4" placeholder="Mensaje" className="form-textarea"></textarea>
+                <button type="submit" className="btn-primary form-submit">Enviar Mensaje</button>
+              </form>
+            </div>
           </div>
         </Section>
       </main>
-      <footer style={{ backgroundColor: "#333", color: "white", textAlign: "center", padding: "2rem", marginTop: "4rem" }}>
-        <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
-          <h3>Donde Te Llevo</h3>
-          <p>Tu solución confiable en transporte profesional</p>
-          <div style={{ display: "flex", justifyContent: "center", gap: "2rem", margin: "1rem 0" }}>
-            <a href="#" style={{ color: "white", textDecoration: "none" }}>Facebook</a>
-            <a href="#" style={{ color: "white", textDecoration: "none" }}>Instagram</a>
-            <a href="#" style={{ color: "white", textDecoration: "none" }}>LinkedIn</a>
+
+      <footer className="footer section-padding">
+        <div className="container text-center">
+          <h3 className="footer-title">Donde Te Llevo</h3>
+          <p className="footer-desc">Tu aliado en movilidad segura y eficiente.</p>
+          <div className="flex justify-center social-links">
+            <a href="#" className="footer-link">Facebook</a>
+            <a href="#" className="footer-link">Instagram</a>
+            <a href="#" className="footer-link">LinkedIn</a>
           </div>
-          <p>&copy; 2024 Donde Te Llevo. Todos los derechos reservados.</p>
+          <div className="footer-copyright">
+            &copy; 2024 Donde Te Llevo. Todos los derechos reservados.
+          </div>
         </div>
       </footer>
     </>
   );
 }
+
