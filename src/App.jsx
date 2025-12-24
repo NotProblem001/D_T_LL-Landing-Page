@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import Header from "./components/Header";
+import Reports from "./pages/Reports";
 
 export default function App() {
   return (
@@ -10,6 +11,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/reports" element={<Reports />} />
       </Routes>
       <footer className="footer section-padding">
         <div className="container text-center">

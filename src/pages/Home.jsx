@@ -1,6 +1,6 @@
 import Section from "../components/Section";
 import ScrollBus from "../components/ScrollBus";
-import UserSections from "../components/UserSections";
+import BookingForm from "../components/BookingForm";
 
 export default function Home() {
   return (
@@ -17,9 +17,13 @@ export default function Home() {
             <h3 className="hero-subtitle">
               Conectamos empresas y eventos con movilidad premium y segura.
             </h3>
-            <div className="flex hero-buttons">
-              <button className="btn-primary">Solicita tu traslado</button>
-              <button className="btn-secondary">Conoce más</button>
+            <div className="flex hero-buttons gap-4">
+              <a href="#contacto" className="btn-primary shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all text-lg px-8 py-3 rounded-full">
+                Solicita tu traslado
+              </a>
+              <a href="#servicios" className="btn-secondary text-lg px-8 py-3 rounded-full">
+                Conoce más
+              </a>
             </div>
           </div>
           <div className="hero-image-container">
@@ -29,9 +33,6 @@ export default function Home() {
           </div>
         </div>
       </Section>
-
-      {/* User Dashboard Section (Visible only if logged in) */}
-      <UserSections />
 
       {/* Servicios Section */}
       <Section id="servicios" title="Nuestros Servicios" subtitle="Soluciones de transporte a tu medida" variant="offset">
@@ -90,8 +91,8 @@ export default function Home() {
         </div>
       </Section>
 
-      {/* Contacto Section */}
-      <Section id="contacto" title="Contáctanos" subtitle="Empieza tu próximo viaje con nosotros">
+      {/* Contacto Section (Booking Form) */}
+      <Section id="contacto" title="Contáctanos y Reserva" subtitle="Empieza tu próximo viaje con nosotros">
         <div className="contact-container grid grid-2">
           <div className="contact-info">
             <h3>Información de Contacto</h3>
@@ -112,21 +113,7 @@ export default function Home() {
             </div>
           </div>
           <div className="contact-form-wrapper">
-            <form className="contact-form flex flex-col">
-              <div className="grid grid-2 form-row">
-                <input type="text" placeholder="Nombre" className="form-input" />
-                <input type="text" placeholder="Apellido" className="form-input" />
-              </div>
-              <input type="email" placeholder="Correo electrónico" className="form-input" />
-              <select className="form-select">
-                <option value="">¿Qué servicio te interesa?</option>
-                <option value="empresarial">Transporte Empresarial</option>
-                <option value="eventos">Eventos Sociales</option>
-                <option value="otro">Otro</option>
-              </select>
-              <textarea rows="4" placeholder="Mensaje" className="form-textarea"></textarea>
-              <button type="submit" className="btn-primary form-submit">Enviar Mensaje</button>
-            </form>
+            <BookingForm />
           </div>
         </div>
       </Section>

@@ -26,11 +26,15 @@ export default function Header() {
       if (jwt) {
         localStorage.setItem('jwt_token', jwt);
         const decoded = jwtDecode(jwt);
+        // console.log("Login Success", decoded);
         setUser(decoded);
         window.location.reload();
+      } else {
+        alert("El servidor no devolvió un token válido.");
       }
     } catch (error) {
       console.error('Login Failed', error);
+      alert("Error al iniciar sesión: " + (error.response?.data || error.message));
     }
   };
 
@@ -57,36 +61,45 @@ export default function Header() {
 
         <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
           <ul className="flex nav-list items-center">
-            <li><a href="/#inicio" onClick={() => setIsMenuOpen(false)}>Inicio</a></li>
-            <li><a href="/#servicios" onClick={() => setIsMenuOpen(false)}>Servicios</a></li>
-
-            {user && (
-              <>
-                <li><a href="/#agendar" className="text-accent" onClick={() => setIsMenuOpen(false)}>Agendar</a></li>
-                <li><a href="/#reportes" className="text-accent" onClick={() => setIsMenuOpen(false)}>Reportes</a></li>
-              </>
-            )}
+            {/* "Reportes" Link - Always visible, protected by page logic */}
+            <li>
+              <a href="/reports"
+                className="text-accent font-medium hover:text-accent-hover transition-colors"
+                onClick={() => setIsMenuOpen(false)}>
+                Reportes
+              </a>
+            </li>
 
             {user ? (
-              <li className="flex items-center gap-2">
-                <a href="/profile" className="flex items-center gap-2 hover:opacity-80 transition-opacity" onClick={() => setIsMenuOpen(false)}>
-                  <div className="w-8 h-8 bg-primary text-white rounded-full flex items-center justify-center text-xs font-bold">
+              /* Logged In State */
+              <li className="flex items-center gap-2 border-l pl-6 ml-2 border-gray-200">
+                <a href="/profile"
+                  className="flex items-center gap-3 hover:opacity-90 transition-all px-4 py-2 rounded-full border border-white/20 shadow-lg backdrop-blur-md"
+                  style={{ backgroundColor: 'rgba(15, 23, 42, 0.85)' }}> {/* Slate-900 with opacity */}
+                  <div className="w-9 h-9 bg-accent text-white rounded-full flex items-center justify-center text-sm font-bold shadow-inner border border-white/30">
                     {user.sub ? user.sub.charAt(0).toUpperCase() : 'U'}
                   </div>
-                  <span className="text-sm font-bold hidden md:block" style={{ color: 'var(--text-primary)' }}>
-                    {user.sub || "Usuario"}
-                  </span>
+                  <div className="flex flex-col">
+                    <span className="text-[10px] text-gray-300 font-medium leading-none uppercase tracking-wider">Hola,</span>
+                    <span className="text-sm font-bold leading-none text-white">
+                      {user.sub || "Usuario"}
+                    </span>
+                  </div>
                 </a>
               </li>
             ) : (
-              <li>
-                <div className="google-login-wrapper">
+              /* Logged Out State */
+              <li className="ml-4">
+                <div className="google-login-wrapper transform hover:scale-105 transition-transform">
                   <GoogleLogin
                     onSuccess={handleLoginSuccess}
                     onError={() => console.log('Login Failed')}
                     useOneTap
-                    type="icon"
-                    shape="circle"
+                    type="standard"
+                    theme="filled_blue"
+                    size="medium"
+                    text="signin"
+                    shape="pill"
                   />
                 </div>
               </li>

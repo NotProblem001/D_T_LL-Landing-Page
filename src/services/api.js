@@ -26,9 +26,26 @@ api.interceptors.request.use(
 export const loginWithGoogle = async (googleToken) => {
     const response = await api.post('/auth/google', { token: googleToken });
     if (response.data) {
+        // Backend returns raw string or object depending on impl, checked before it was string.
         localStorage.setItem('jwt_token', response.data);
     }
     return response.data;
+};
+
+export const registerUser = async (userData) => {
+    return await api.post('/auth/register', userData);
+};
+
+export const loginUser = async (email, password) => {
+    const response = await api.post('/auth/token', { name: email, password: password });
+    if (response.data) {
+        localStorage.setItem('jwt_token', response.data);
+    }
+    return response.data;
+};
+
+export const updateUser = async (userData) => {
+    return await api.put('/auth/update', userData);
 };
 
 export const createReport = async (reportData) => {
