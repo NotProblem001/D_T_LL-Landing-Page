@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
-import { loginWithGoogle } from '../services/api';
+// import { loginWithGoogle } from '../services/api'; // Moved to AuthPage if needed
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -18,25 +17,6 @@ export default function Header() {
       }
     }
   }, []);
-
-  const handleLoginSuccess = async (credentialResponse) => {
-    try {
-      // credentialResponse.credential is the Google ID Token
-      const jwt = await loginWithGoogle(credentialResponse.credential);
-      if (jwt) {
-        localStorage.setItem('jwt_token', jwt);
-        const decoded = jwtDecode(jwt);
-        // console.log("Login Success", decoded);
-        setUser(decoded);
-        window.location.reload();
-      } else {
-        alert("El servidor no devolvió un token válido.");
-      }
-    } catch (error) {
-      console.error('Login Failed', error);
-      alert("Error al iniciar sesión: " + (error.response?.data || error.message));
-    }
-  };
 
   const handleLogout = () => {
     localStorage.removeItem('jwt_token');
@@ -71,41 +51,27 @@ export default function Header() {
             </li>
 
             {user ? (
-              /* Logged In State */
-              <li className="flex items-center gap-2 border-l pl-6 ml-2 border-gray-200">
-                <a href="/profile"
-                  className="flex items-center gap-3 hover:opacity-90 transition-all px-4 py-2 rounded-full border border-white/20 shadow-lg backdrop-blur-md"
-                  style={{ backgroundColor: 'rgba(15, 23, 42, 0.85)' }}> {/* Slate-900 with opacity */}
-                  <div className="w-9 h-9 bg-accent text-white rounded-full flex items-center justify-center text-sm font-bold shadow-inner border border-white/30">
-                    {user.sub ? user.sub.charAt(0).toUpperCase() : 'U'}
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-[10px] text-gray-300 font-medium leading-none uppercase tracking-wider">Hola,</span>
-                    <span className="text-sm font-bold leading-none text-white">
-                      {user.sub || "Usuario"}
-                    </span>
-                  </div>
+              /* Logged In State - Premium Button */
+              <li className="ml-4">
+                <a href="/profile" className="btn-premium profile">
+                  <span className="text-sm">Hola, {user.sub || "Usuario"}</span>
+                  <span style={{ fontSize: '1.2rem', lineHeight: 0 }}>👤</span>
                 </a>
               </li>
             ) : (
-              /* Logged Out State */
+              /* Logged Out State - Premium Button */
               <li className="ml-4">
-                <div className="google-login-wrapper transform hover:scale-105 transition-transform">
-                  <GoogleLogin
-                    onSuccess={handleLoginSuccess}
-                    onError={() => console.log('Login Failed')}
-                    useOneTap
-                    type="standard"
-                    theme="filled_blue"
-                    size="medium"
-                    text="signin"
-                    shape="pill"
-                  />
-                </div>
+                <a href="/login" className="btn-premium">
+                  Iniciar Sesión
+                </a>
               </li>
             )}
 
-            <li><a href="/#contacto" className="btn-primary" onClick={() => setIsMenuOpen(false)}>Contacto</a></li>
+            <li>
+              <a href="/#contacto" className="btn-premium primary">
+                Contacto
+              </a>
+            </li>
           </ul>
         </nav>
       </div>

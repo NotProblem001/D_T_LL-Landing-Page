@@ -1,0 +1,67 @@
+/* Premium Neu-morphic Button Styles */
+.btn-premium {
+    position: relative;
+    padding: 0.75rem 2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1e293b;
+    /* Slate 800 */
+    background: linear-gradient(to bottom, #FCFCFC, #E8ECED);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 9999px;
+    /* Pill shape */
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Complex Shadow for that "Soft UI" look */
+    box-shadow:
+        0 4px 6px -1px rgba(0, 0, 0, 0.05),
+        /* Soft drop */
+        0 -2px 4px rgba(255, 255, 255, 0.8) inset,
+        /* Inner Highlight */
+        0 2px 4px rgba(0, 0, 0, 0.02) inset;
+    /* Inner Depth */
+
+    /* Ensure text is centered and readable */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    /* For <a> tags */
+}
+
+/* Hover State - Lighter/Brighter */
+.btn-premium:hover {
+    background: linear-gradient(to bottom, #FFFFFF, #F1F5F9);
+    transform: translateY(-1px);
+    box-shadow:
+        0 10px 15px -3px rgba(0, 0, 0, 0.08),
+        0 -2px 4px rgba(255, 255, 255, 1) inset;
+    color: #0f172a;
+    /* Darker text */
+}
+
+/* Active/Pressed State - Pressed In */
+.btn-premium:active {
+    background: linear-gradient(to bottom, #E2E8F0, #F1F5F9);
+    transform: translateY(1px);
+    box-shadow:
+        0 2px 4px rgba(0, 0, 0, 0.05),
+        0 4px 8px rgba(0, 0, 0, 0.1) inset;
+    /* Inner shadow for pressed look */
+    border-color: rgba(203, 213, 225, 0.5);
+}
+
+/* Variant for "Primary" actions (a bit more emphasis but keeping same style) */
+.btn-premium.primary {
+    font-weight: 700;
+    /* Optional: Subtle accent color adaptation if needed, but keeping white/gray as per request */
+}
+
+/* Profile specific adjustments */
+.btn-premium.profile {
+    padding: 0.5rem 1.5rem;
+    gap: 0.75rem;
+    min-width: 140px;
+}

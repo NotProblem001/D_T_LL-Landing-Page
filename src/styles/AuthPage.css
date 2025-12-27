@@ -1,0 +1,323 @@
+/* AuthPage.css */
+
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: #f1f5f9;
+    /* Slate 100 - Better contrast */
+    font-family: 'Inter', sans-serif;
+    padding: 20px;
+}
+
+.auth-card {
+    position: relative;
+    overflow: hidden;
+    width: 850px;
+    height: 550px;
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: row;
+    /* Default: Side by side */
+}
+
+/* Background overlay (The dark blue slider) */
+.card-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background: #0f172a;
+    /* Primary Color */
+    z-index: 10;
+    transition: transform 0.6s cubic-bezier(0.8, 0, 0.2, 1);
+}
+
+.card-bg.signin-active {
+    transform: translateX(100%);
+}
+
+/* Base Styles for Sections */
+.auth-hero,
+.auth-form {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px;
+    text-align: center;
+    transition: all 0.6s cubic-bezier(0.8, 0, 0.2, 1);
+}
+
+/* === HERO SECTIONS (Text on Dark Background) === */
+.auth-hero {
+    z-index: 20;
+    /* Above card-bg */
+    color: white;
+}
+
+.hero-signin {
+    left: 0;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-20%);
+}
+
+.hero-signin.active {
+    pointer-events: all;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.hero-signup {
+    right: 0;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(20%);
+}
+
+.hero-signup.active {
+    pointer-events: all;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.auth-hero h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.1;
+}
+
+.auth-hero p {
+    font-size: 1rem;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+    max-width: 300px;
+}
+
+.btn-toggle {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    padding: 12px 36px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+}
+
+.btn-toggle:hover {
+    background: white;
+    color: #0f172a;
+}
+
+/* === FORM SECTIONS (White Background) === */
+.auth-form {
+    z-index: 5;
+    background: white;
+}
+
+.form-signin {
+    left: 0;
+    opacity: 0;
+    /* Hidden by default if signin is NOT active (i.e. we are registering) */
+    z-index: 1;
+}
+
+/* When SignIn is asked: form is on LEFT. Slider goes to RIGHT. */
+.form-signin.active {
+    opacity: 1;
+    z-index: 8;
+    animation: fadeIn 0.6s 0.2s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+}
+
+.form-signup {
+    right: 0;
+    /* When Signup is asked: form is on RIGHT. Slider goes to LEFT. */
+    opacity: 0;
+    z-index: 1;
+}
+
+.form-signup.active {
+    opacity: 1;
+    z-index: 8;
+    animation: fadeIn 0.6s 0.2s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.auth-form h2 {
+    color: #0f172a;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+
+.auth-inputs {
+    width: 100%;
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.auth-input {
+    width: 100%;
+    padding: 14px 16px;
+    background: #f1f5f9;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.auth-input:focus {
+    background: white;
+    border-color: #0f172a;
+    box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.1);
+}
+
+.btn-primary-auth {
+    width: 100%;
+    background: #0f172a;
+    color: white;
+    border: none;
+    padding: 16px;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 1rem;
+    cursor: pointer;
+    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-primary-auth:hover {
+    background: #1e293b;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 20px -3px rgba(15, 23, 42, 0.4);
+}
+
+.social-icons {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+}
+
+.social-icon {
+    width: 48px;
+    height: 48px;
+    background: white;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #64748b;
+    transition: all 0.3s ease;
+}
+
+.social-icon:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #0f172a;
+    transform: translateY(-2px);
+}
+
+/* === MOBILE RESPONSIVE === */
+@media (max-width: 768px) {
+    .auth-container {
+        align-items: flex-start;
+        padding: 10px;
+        padding-top: 80px;
+        /* Space for Header */
+    }
+
+    .auth-card {
+        width: 100%;
+        max-width: 450px;
+        height: auto;
+        min-height: 600px;
+        flex-direction: column;
+        border-radius: 16px;
+    }
+
+    /* Concept Shift: Instead of Left/Right, we use Top/Bottom or Stacked visibility */
+    /* On mobile, we can't easily do the side-slider. Better to just toggle visibility. */
+
+    .card-bg {
+        width: 100%;
+        height: 120px;
+        /* Small banner at top */
+        z-index: 1;
+        /* Behind */
+        display: none;
+        /* Disable slider effect on mobile for simplicity */
+    }
+
+    .auth-hero {
+        display: none;
+        /* Hide the "Welcome Back" text panel on mobile to save space */
+    }
+
+    /* Force forms to take full space */
+    .auth-form {
+        position: relative;
+        width: 100%;
+        height: auto;
+        padding: 2rem;
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+        display: none;
+        /* Hide both initially */
+    }
+
+    .form-signin.active,
+    .form-signup.active {
+        display: flex;
+        z-index: 10;
+    }
+
+    /* Add a manual toggle link for mobile since Hero is hidden */
+    .mobile-toggle-text {
+        display: block !important;
+        margin-top: 1.5rem;
+        font-size: 0.9rem;
+        color: #64748b;
+    }
+
+    .mobile-toggle-link {
+        color: #0f172a;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}
+
+/* Helper to show text only on mobile */
+.mobile-toggle-text {
+    display: none;
+}
