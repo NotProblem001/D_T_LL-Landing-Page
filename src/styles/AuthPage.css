@@ -1,323 +1,486 @@
-/* AuthPage.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+/* === GLOBAL RESET & FONTS === */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* === MAIN CONTAINER === */
 .auth-container {
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: #f1f5f9;
-    /* Slate 100 - Better contrast */
-    font-family: 'Inter', sans-serif;
+    background-color: #f0f2f5;
+    /* Light and clean background */
+    background-image: radial-gradient(circle at 10% 20%, rgb(240, 242, 245) 0%, rgb(228, 232, 238) 90%);
     padding: 20px;
 }
 
+/* === CARD GLASSMORPHISM/SHADOW === */
 .auth-card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08), 0 5px 15px rgba(0, 0, 0, 0.05);
+    /* Premium soft shadow */
     position: relative;
     overflow: hidden;
-    width: 850px;
-    height: 550px;
-    border-radius: 24px;
-    background: #ffffff;
-    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    width: 900px;
+    max-width: 100%;
+    min-height: 600px;
     display: flex;
-    flex-direction: row;
-    /* Default: Side by side */
 }
 
-/* Background overlay (The dark blue slider) */
-.card-bg {
+/* === FORMS CONTAINER & ANIMATION === */
+/* === FORMS CONTAINER & ANIMATION === */
+.form-container {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 50%;
     height: 100%;
-    background: #0f172a;
-    /* Primary Color */
-    z-index: 10;
-    transition: transform 0.6s cubic-bezier(0.8, 0, 0.2, 1);
-}
-
-.card-bg.signin-active {
-    transform: translateX(100%);
-}
-
-/* Base Styles for Sections */
-.auth-hero,
-.auth-form {
-    position: absolute;
-    top: 0;
-    width: 50%;
-    height: 100%;
+    background-color: #ffffff;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
-    padding: 0 40px;
-    text-align: center;
-    transition: all 0.6s cubic-bezier(0.8, 0, 0.2, 1);
-}
+    justify-content: center;
+    padding: 0 50px;
+    width: 50%;
 
-/* === HERO SECTIONS (Text on Dark Background) === */
-.auth-hero {
-    z-index: 20;
-    /* Above card-bg */
-    color: white;
-}
-
-.hero-signin {
-    left: 0;
-    pointer-events: none;
-    opacity: 0;
-    transform: translateX(-20%);
-}
-
-.hero-signin.active {
-    pointer-events: all;
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.hero-signup {
-    right: 0;
-    pointer-events: none;
-    opacity: 0;
-    transform: translateX(20%);
-}
-
-.hero-signup.active {
-    pointer-events: all;
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.auth-hero h2 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    line-height: 1.1;
-}
-
-.auth-hero p {
-    font-size: 1rem;
-    opacity: 0.9;
-    margin-bottom: 2rem;
-    max-width: 300px;
-}
-
-.btn-toggle {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    padding: 12px 36px;
-    border-radius: 50px;
-    font-weight: 600;
-    cursor: pointer;
-    backdrop-filter: blur(5px);
-    transition: all 0.3s ease;
-}
-
-.btn-toggle:hover {
-    background: white;
-    color: #0f172a;
-}
-
-/* === FORM SECTIONS (White Background) === */
-.auth-form {
-    z-index: 5;
-    background: white;
-}
-
-.form-signin {
-    left: 0;
-    opacity: 0;
-    /* Hidden by default if signin is NOT active (i.e. we are registering) */
-    z-index: 1;
-}
-
-/* When SignIn is asked: form is on LEFT. Slider goes to RIGHT. */
-.form-signin.active {
-    opacity: 1;
-    z-index: 8;
-    animation: fadeIn 0.6s 0.2s cubic-bezier(0.8, 0, 0.2, 1) forwards;
-}
-
-.form-signup {
-    right: 0;
-    /* When Signup is asked: form is on RIGHT. Slider goes to LEFT. */
+    /* Default / Inactive State: 
+       - Hide instantly (0s duration) so it's gone before the slider moves away.
+       - Z-index drops instantly.
+    */
     opacity: 0;
     z-index: 1;
+    transition: opacity 0s linear, z-index 0s linear;
 }
 
-.form-signup.active {
-    opacity: 1;
-    z-index: 8;
-    animation: fadeIn 0.6s 0.2s cubic-bezier(0.8, 0, 0.2, 1) forwards;
-}
-
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.auth-form h2 {
-    color: #0f172a;
-    font-size: 2rem;
-    font-weight: 800;
-    margin-bottom: 1.5rem;
-}
-
-.auth-inputs {
-    width: 100%;
-    max-width: 320px;
+/* Base Form Styles */
+form {
+    background: #ffffff;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+    width: 100%;
 }
 
-.auth-input {
+/* Typography */
+h1 {
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+    font-size: 2.2rem;
+    letter-spacing: -0.5px;
+}
+
+.divider-text {
+    font-size: 0.85rem;
+    color: #888;
+    margin: 15px 0;
+    font-weight: 400;
+}
+
+/* === SOCIAL BUTTONS === */
+.social-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 10px;
     width: 100%;
-    padding: 14px 16px;
-    background: #f1f5f9;
-    border: 2px solid transparent;
-    border-radius: 12px;
+    justify-content: center;
+}
+
+.social-btn {
+    border-radius: 8px;
+    padding: 12px 24px;
+    /* Rectangular shape */
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 48%;
+    /* Split width */
+    justify-content: center;
+}
+
+.social-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* Specific Styles */
+.social-btn.google {
+    background: #fff;
+    border: 1px solid #e1e4e8;
+    color: #333;
+}
+
+.social-btn.google:hover {
+    background-color: #f9f9f9;
+    border-color: #d1d4d8;
+    transform: translateY(-1px);
+}
+
+.social-btn.linkedin {
+    background: #0077b5;
+    /* LinkedIn Blue */
+    border: 1px solid #0077b5;
+    color: #fff;
+}
+
+.social-btn.linkedin:hover {
+    background: #006097;
+    border-color: #006097;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 119, 181, 0.3);
+}
+
+
+/* === INPUT FIELDS === */
+input {
+    background-color: #f8fafc;
+    /* Subtle grey */
+    border: 1px solid #e2e8f0;
+    /* Elegant crisp border */
+    padding: 14px 18px;
+    margin: 8px 0;
+    width: 100%;
+    border-radius: 8px;
     font-size: 0.95rem;
+    color: #1a202c;
+    /* Dark text for readability */
+    font-family: 'Poppins', sans-serif;
     outline: none;
     transition: all 0.3s ease;
 }
 
-.auth-input:focus {
-    background: white;
-    border-color: #0f172a;
-    box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.1);
+input::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
 }
 
-.btn-primary-auth {
-    width: 100%;
-    background: #0f172a;
-    color: white;
+input:focus {
+    background-color: #fff;
+    border-color: #2563eb;
+    /* Active blue focus */
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+}
+
+/* === PRIMARY BUTTON === */
+.btn-primary {
+    border-radius: 8px;
     border: none;
-    padding: 16px;
-    border-radius: 12px;
+    background: #111827;
+    /* Near black for elegance */
+    color: #ffffff;
     font-size: 1rem;
-    font-weight: 700;
-    margin-top: 1rem;
+    font-weight: 600;
+    padding: 14px 45px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    transition: transform 0.1s ease-in, background-color 0.3s;
     cursor: pointer;
-    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.3);
-    transition: all 0.3s ease;
+    margin-top: 20px;
+    width: 100%;
 }
 
-.btn-primary-auth:hover {
-    background: #1e293b;
-    transform: translateY(-2px);
-    box-shadow: 0 15px 20px -3px rgba(15, 23, 42, 0.4);
+.btn-primary:hover {
+    background: #000000;
+    transform: scale(1.01);
 }
 
-.social-icons {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 1.5rem;
+.btn-primary:active {
+    transform: scale(0.98);
 }
 
-.social-icon {
-    width: 48px;
-    height: 48px;
-    background: white;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
+.forgot-password {
+    color: #666;
+    font-size: 0.85rem;
+    text-decoration: none;
+    margin: 10px 0;
+    font-weight: 500;
+    align-self: flex-end;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+    color: #111;
+}
+
+
+/* === OVERLAY / SLIDER SECTION === */
+.card-overlay {
+    background: linear-gradient(135deg, #1e3a8a 0%, #0f172a 100%);
+    background-size: cover;
+    color: #ffffff;
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
-    color: #64748b;
-    transition: all 0.3s ease;
+    text-align: center;
+    overflow: hidden;
+    /* Ensure content doesn't spill */
 }
 
-.social-icon:hover {
-    background: #f8fafc;
-    border-color: #cbd5e1;
+/* Base Overlay Content Style - DEFAULT HIDDEN STATE */
+.overlay-content {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    height: 100%;
+    width: 100%;
+
+    /* Strict Visibility: Hidden by default */
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
+    /* Prevent clicks when hidden */
+    transform: translateX(0);
+
+    /* INSTANT HIDE: No delay when going to hidden state */
+    transition: opacity 0s linear, transform 0.6s ease-in-out;
+}
+
+/* Typography for Overlay */
+.overlay-content h2 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #fff;
+}
+
+.overlay-content p {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.6;
+    letter-spacing: 0.3px;
+    margin-bottom: 30px;
+    opacity: 0.9;
+    color: #e2e8f0;
+}
+
+.btn-ghost {
+    background-color: transparent;
+    border: 2px solid #ffffff;
+    color: #ffffff;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    pointer-events: auto;
+    /* Re-enable pointer events on the button specifically if needed? inherited from parent active state is better */
+}
+
+.btn-ghost:hover {
+    background-color: #ffffff;
     color: #0f172a;
     transform: translateY(-2px);
 }
 
+/* === STRICT VISIBILITY LOGIC === */
+
+/* 1. Panel Movement */
+.overlay-right {
+    transform: translateX(0);
+    /* Panel is on the RIGHT side */
+}
+
+.overlay-left {
+    transform: translateX(-100%);
+    /* Panel is on the LEFT side */
+}
+
+/* 2. Content Visibility in Overlay */
+
+/* When Overlay is Right (covering Sign Up), we show 'Hello Friend' (Sign Up PROMPT) */
+/* Wait... if over Right, it covers Sign Up form. It should show "Welcome Back" to invite user to Sign In? 
+   Let's check the JSX: 
+   isSignIn=true -> 'overlay-right'
+   overlay-signin -> "Welcome Back" -> Button "INICIAR SESIÓN" (implies go to sign in)
+   overlay-signup -> "Hello Friend" -> Button "REGISTRARSE" (implies go to sign up)
+   
+   If isSignIn is TRUE:
+   - Panel is on RIGHT.
+   - User is looking at SIGN IN form on LEFT.
+   - Panel covers the Right side (where Sign Up would be).
+   - Panel should say: "Hello Friend" + "REGISTRARSE" button to switch.
+   
+   So: overlay-right should SHOW overlay-signup content.
+*/
+
+/* Active Content State:
+   - Delay opacity to wait for panel to move.
+   - Pointer events active.
+*/
+.overlay-right .overlay-signup {
+    opacity: 1;
+    z-index: 5;
+    pointer-events: all;
+    transition: opacity 0.4s ease-in-out 0.3s, transform 0.6s ease-in-out;
+    transform: translateX(0);
+}
+
+.overlay-right .overlay-signin {
+    /* Explicitly hidden (inherits default but good to be strict) */
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
+    transform: translateX(20%);
+    /* Move slightly for parallax effect on exit */
+}
+
+.overlay-left .overlay-signin {
+    opacity: 1;
+    z-index: 5;
+    pointer-events: all;
+    transition: opacity 0.4s ease-in-out 0.3s, transform 0.6s ease-in-out;
+    transform: translateX(0);
+}
+
+.overlay-left .overlay-signup {
+    opacity: 0;
+    z-index: 0;
+    pointer-events: none;
+    transform: translateX(-20%);
+}
+
+
+/* 3. Form Visibility */
+
+/* Base positioning */
+.sign-in-container {
+    left: 0;
+    width: 50%;
+    transform: translateX(0);
+}
+
+.sign-up-container {
+    left: 0;
+    width: 50%;
+    transform: translateX(100%);
+}
+
+/* Base Inactive State logic is in .form-container (opacity: 0, transition: 0s) */
+
+/* Active Form State:
+   - Delayed fade in to ensure overlay is already moving/covering the other one.
+*/
+.form-container.active-z {
+    opacity: 1;
+    z-index: 5;
+    pointer-events: all;
+    transition: opacity 0.4s ease-in-out 0.3s, z-index 0s linear;
+}
+
+
+
+
 /* === MOBILE RESPONSIVE === */
+.mobile-toggle {
+    display: none;
+}
+
 @media (max-width: 768px) {
-    .auth-container {
-        align-items: flex-start;
-        padding: 10px;
-        padding-top: 80px;
-        /* Space for Header */
-    }
-
     .auth-card {
-        width: 100%;
-        max-width: 450px;
-        height: auto;
-        min-height: 600px;
         flex-direction: column;
-        border-radius: 16px;
-    }
-
-    /* Concept Shift: Instead of Left/Right, we use Top/Bottom or Stacked visibility */
-    /* On mobile, we can't easily do the side-slider. Better to just toggle visibility. */
-
-    .card-bg {
         width: 100%;
-        height: 120px;
-        /* Small banner at top */
-        z-index: 1;
-        /* Behind */
-        display: none;
-        /* Disable slider effect on mobile for simplicity */
+        max-width: 420px;
+        min-height: auto;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        padding: 20px 0;
     }
 
-    .auth-hero {
+    .card-overlay {
         display: none;
-        /* Hide the "Welcome Back" text panel on mobile to save space */
+        /* Hide slider on mobile */
     }
 
-    /* Force forms to take full space */
-    .auth-form {
+    .form-container {
         position: relative;
         width: 100%;
         height: auto;
-        padding: 2rem;
         opacity: 1 !important;
         transform: none !important;
-        animation: none !important;
         display: none;
-        /* Hide both initially */
+        /* Controlled via JS toggles usually, but here by class specificity */
+        padding: 0 20px;
     }
 
-    .form-signin.active,
-    .form-signup.active {
+    /* We need to override the sliding classes for mobile to just show/hide */
+    .sign-in-container.active-z,
+    .sign-up-container.active-z {
         display: flex;
-        z-index: 10;
+        animation: fadeInMobile 0.5s ease;
     }
 
-    /* Add a manual toggle link for mobile since Hero is hidden */
-    .mobile-toggle-text {
-        display: block !important;
-        margin-top: 1.5rem;
+    .sign-up-container.active-z {
+        transform: none;
+    }
+
+    form {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .mobile-toggle {
+        display: block;
+        margin-top: 20px;
         font-size: 0.9rem;
-        color: #64748b;
+        color: #666;
     }
 
-    .mobile-toggle-link {
-        color: #0f172a;
-        font-weight: 700;
+    .mobile-toggle span {
+        color: #111;
+        font-weight: 600;
         cursor: pointer;
         text-decoration: underline;
     }
+
+    .social-btn {
+        width: 100%;
+        /* Full width on mobile */
+    }
+
+    .social-container {
+        flex-direction: column;
+        /* Stack buttons on mobile */
+    }
 }
 
-/* Helper to show text only on mobile */
-.mobile-toggle-text {
-    display: none;
+@keyframes fadeInMobile {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
