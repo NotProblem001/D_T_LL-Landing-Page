@@ -4,6 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import { loginUser, registerUser, loginWithGoogle } from '../services/api';
 import { useGoogleLogin } from '@react-oauth/google';
 
+import { useEffect } from 'react'; // Added useEffect
+
 export default function AuthPage() {
     const [isSignIn, setIsSignIn] = useState(true);
     const navigate = useNavigate();
@@ -12,7 +14,28 @@ export default function AuthPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
-    const [phoneNumber, setPhoneNumber] = useState(''); // New State for Phone
+    const [phoneNumber, setPhoneNumber] = useState('');
+
+    // LinkedIn Callback Handling
+    useEffect(() => {
+        const queryParams = new URLSearchParams(window.location.search);
+        const code = queryParams.get('code');
+        if (code) {
+            // Prevent double calling in strict mode if possible, but minimal impact here
+            import('../services/api').then(api => {
+                api.loginWithLinkedIn(code)
+                    .then(() => {
+                        // Clear the code from URL
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                        navigate('/profile');
+                    })
+                    .catch((err) => {
+                        console.error("LinkedIn Login Error:", err);
+                        alert("Error al iniciar sesión con LinkedIn.");
+                    });
+            });
+        }
+    }, [navigate]);
 
     const toggleView = () => {
         setIsSignIn(!isSignIn);
@@ -57,10 +80,17 @@ export default function AuthPage() {
         onError: (error) => console.log('Google Login Failed:', error)
     });
 
-    // LinkedIn Mock
+    // LinkedIn Mock -> Real Implementation
     const handleLinkedinLogin = () => {
-        console.log("LinkedIn Login clicked - Logic to be implemented");
-        alert("Inicio de sesión con LinkedIn próximamente.");
+        const CLIENT_ID = 'YOUR_LINKEDIN_CLIENT_ID'; // Placeholder for User to replace
+        const REDIRECT_URI = window.location.origin + '/login';
+        // Scope needs to include r_liteprofile and r_emailaddress, or openid profile email for v2
+        const SCOPE = 'openid profile email';
+        const STATE = 'random_state_string'; // Ideally generate random string
+
+        const linkedInUrl = `https://www.linkedin.com/oauth/v2/authorization?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&state=${STATE}&scope=${encodeURIComponent(SCOPE)}`;
+
+        window.location.href = linkedInUrl;
     };
 
     return (

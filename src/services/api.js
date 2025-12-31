@@ -32,6 +32,14 @@ export const loginWithGoogle = async (googleToken) => {
     return response.data;
 };
 
+export const loginWithLinkedIn = async (code) => {
+    const response = await api.post('/auth/linkedin', { code });
+    if (response.data) {
+        localStorage.setItem('jwt_token', response.data);
+    }
+    return response.data;
+};
+
 export const registerUser = async (userData) => {
     return await api.post('/auth/register', userData);
 };

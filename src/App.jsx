@@ -1,10 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Home from "./pages/Home";
-import Profile from "./pages/Profile";
 import Header from "./components/Header";
-import Reports from "./pages/Reports";
-import AuthPage from "./pages/AuthPage";
-
 
 export default function App() {
   return (
@@ -12,9 +8,8 @@ export default function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/login" element={<AuthPage />} />
+        {/* Redirect all other routes to home for "One Page" feel */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
       <footer className="footer section-padding">
         <div className="container text-center">

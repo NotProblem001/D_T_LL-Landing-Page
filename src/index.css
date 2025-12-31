@@ -90,26 +90,36 @@ a:hover {
   color: var(--accent-hover);
 }
 
+/* Button Base Styles */
 button {
-  padding: 0.75rem 1.5rem;
+  padding: 0.75rem 2rem;
   font-size: 1rem;
   font-weight: 600;
-  border-radius: 6px;
+  border-radius: 9999px;
+  /* Make all buttons pill-shaped by default for better aesthetics */
   border: none;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
+/* Primary Button - Elegant & Minimalist */
 .btn-primary {
   background-color: var(--accent);
   color: var(--primary);
+  box-shadow: 0 4px 6px -1px rgba(245, 158, 11, 0.2), 0 2px 4px -1px rgba(245, 158, 11, 0.1);
 }
 
 .btn-primary:hover {
   background-color: var(--accent-hover);
   transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.3), 0 4px 6px -2px rgba(245, 158, 11, 0.15);
 }
 
+/* Secondary Button - Outline Style */
 .btn-secondary {
   background-color: transparent;
   border: 2px solid var(--accent);
@@ -119,6 +129,45 @@ button {
 .btn-secondary:hover {
   background-color: var(--accent);
   color: var(--primary);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+  transform: translateY(-1px);
+}
+
+/* WhatsApp Button */
+.btn-whatsapp {
+  background-color: #25D366;
+  color: white;
+  border: 1px solid #25D366;
+}
+
+.btn-whatsapp:hover {
+  background-color: #128C7E;
+  border-color: #128C7E;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(37, 211, 102, 0.4);
+}
+
+/* Utility Classes */
+.rounded-full {
+  border-radius: 9999px !important;
+}
+
+.shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.hover\:shadow-2xl:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.hover\:-translate-y-1:hover {
+  transform: translateY(-0.25rem);
+}
+
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
 }
 
 /* Layout Utilities */
