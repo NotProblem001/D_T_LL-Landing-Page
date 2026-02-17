@@ -25,7 +25,7 @@ const VoicePersonality = () => {
             <div className="container mx-auto px-6 relative z-10 flex flex-col md:flex-row items-center gap-16">
 
                 <div className="md:w-1/2">
-                    <h2 className="font-display text-4xl md:text-5xl font-bold mb-8 leading-tight">
+                    <h2 className="font-display text-4xl md:text-5xl font-bold mb-8 leading-tight text-white">
                         ¿Por qué elegir <br />
                         <span className="text-dtll-turquoise">Donde Te Llevo?</span>
                     </h2>
@@ -43,7 +43,7 @@ const VoicePersonality = () => {
                             <div className="flex items-start gap-4">
                                 <CheckCircle2 className="text-dtll-turquoise shrink-0 mt-1" size={28} />
                                 <div>
-                                    <h3 className="font-display font-bold text-xl mb-2">{reason.title}</h3>
+                                    <h3 className="font-display font-bold text-xl mb-2 text-dtll-gold">{reason.title}</h3>
                                     <p className="text-gray-200 opacity-90">{reason.desc}</p>
                                 </div>
                             </div>
