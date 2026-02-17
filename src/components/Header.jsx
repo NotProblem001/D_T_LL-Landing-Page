@@ -1,7 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { Menu, X } from 'lucide-react';
+import logoMain from '../assets/Logo_Main_DTLL.png';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const scrollToSection = (sectionId) => {
     const element = document.getElementById(sectionId);
@@ -11,60 +22,70 @@ export default function Header() {
     setIsMenuOpen(false);
   };
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
   return (
-    <header className="header">
-      <div className="container flex justify-between items-center header-content">
-        <button onClick={() => scrollToSection('inicio')} className="logo" style={{ background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-          <span className="logo-icon">🚍</span> Donde Te Llevo
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-sm py-2' : 'bg-transparent py-4'
+        }`}
+    >
+      <div className="container mx-auto px-6 flex justify-between items-center">
+        {/* Logo */}
+        <button onClick={() => scrollToSection('inicio')} className="flex items-center gap-2 z-50 relative">
+          <img src={logoMain} alt="Donde Te Llevo" className="h-10 md:h-12 object-contain" />
         </button>
 
-        <button className="mobile-menu-btn" onClick={toggleMenu} aria-label="Toggle menu">
-          <span className={`hamburger ${isMenuOpen ? 'active' : ''}`}></span>
+        {/* Mobile Toggle */}
+        <button
+          className="md:hidden z-50 text-dtll-blue relative"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
 
-        <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-          <ul className="flex nav-list items-center" style={{ gap: '2rem' }}>
+        {/* Desktop Nav */}
+        <nav className="hidden md:block">
+          <ul className="flex items-center gap-8 font-medium text-dtll-gray">
             <li>
-              <button
-                onClick={() => scrollToSection('inicio')}
-                className="text-accent font-medium hover:text-accent-hover transition-colors"
-                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1rem', padding: '0.5rem' }}
-              >
+              <button onClick={() => scrollToSection('inicio')} className="hover:text-dtll-blue transition-colors">
                 Inicio
               </button>
             </li>
             <li>
-              <button
-                onClick={() => scrollToSection('servicios')}
-                className="text-accent font-medium hover:text-accent-hover transition-colors"
-                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1rem', padding: '0.5rem' }}
-              >
+              <button onClick={() => scrollToSection('servicios')} className="hover:text-dtll-blue transition-colors">
                 Servicios
               </button>
             </li>
             <li>
-              <button
-                onClick={() => scrollToSection('galeria')}
-                className="text-accent font-medium hover:text-accent-hover transition-colors"
-                style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '1rem', padding: '0.5rem' }}
-              >
+              <button onClick={() => scrollToSection('galeria')} className="hover:text-dtll-blue transition-colors">
                 Galería
               </button>
             </li>
             <li>
               <button
                 onClick={() => scrollToSection('contacto')}
-                className="btn-premium primary"
+                className="btn-primary py-2 px-6 text-sm"
               >
                 Contacto
               </button>
             </li>
           </ul>
         </nav>
+
+        {/* Mobile Nav Overlay */}
+        <div className={`fixed inset-0 bg-white z-40 flex flex-col items-center justify-center gap-8 transition-transform duration-300 md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}>
+          <ul className="flex flex-col items-center gap-8 text-xl font-medium text-dtll-blue">
+            <li><button onClick={() => scrollToSection('inicio')}>Inicio</button></li>
+            <li><button onClick={() => scrollToSection('servicios')}>Servicios</button></li>
+            <li><button onClick={() => scrollToSection('galeria')}>Galería</button></li>
+            <li>
+              <button onClick={() => scrollToSection('contacto')} className="btn-primary text-xl px-10 py-3">
+                Contacto
+              </button>
+            </li>
+          </ul>
+        </div>
+
       </div>
     </header>
   );

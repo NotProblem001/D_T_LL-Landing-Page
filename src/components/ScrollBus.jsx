@@ -17,7 +17,7 @@ export default function ScrollBus() {
         if (!containerRef.current) return;
 
         // Sections IDs
-        const sections = ["inicio", "servicios", "valoraciones", "galeria", "contacto"];
+        const sections = ["inicio", "mercado", "adn", "servicios", "contacto"];
         const points = [];
         const containerRect = containerRef.current.getBoundingClientRect();
         const containerWidth = containerRect.width;
