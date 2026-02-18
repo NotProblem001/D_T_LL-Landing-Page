@@ -1,230 +1,79 @@
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MotionPathPlugin } from "gsap/MotionPathPlugin";
+import { motion, useScroll, useTransform } from "framer-motion";
 import busIcon from "../assets/bus.svg";
 
-gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
-
 export default function ScrollBus() {
-    const containerRef = useRef(null);
-    const busRef = useRef(null);
-    const maskCircleRef = useRef(null); // Reference for the mask circle
-    const pathRef = useRef(null);
-    const [pathD, setPathD] = useState("");
+    // 1. Lógica de Movimiento (Framer Motion)
+    // Usa el hook useScroll sin target específico para scroll global
+    const { scrollYProgress } = useScroll();
 
-    const calculatePath = () => {
-        if (!containerRef.current) return;
+    // Mapea 0 (inicio página) a 1 (final página) -> 0% a 100% del recorrido
+    // Transformación directa como pidió el usuario CRÍTICAMENTE.
+    const pathLength = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
-        // Sections IDs
-        const sections = ["inicio", "mercado", "adn", "servicios", "contacto"];
-        const points = [];
-        const containerRect = containerRef.current.getBoundingClientRect();
-        const containerWidth = containerRect.width;
-
-        // Configuration
-        const sidePadding = containerWidth * 0.05;
-        const rightX = containerWidth - sidePadding;
-        const leftX = sidePadding;
-        const centerX = containerWidth / 2;
-
-        sections.forEach((id, index) => {
-            const el = document.getElementById(id);
-            if (el) {
-                const rect = el.getBoundingClientRect();
-                const relativeTop = rect.top - containerRect.top;
-                const relativeBottom = rect.bottom - containerRect.top;
-                const sectionCenterY = relativeTop + rect.height / 2;
-
-                if (id === "inicio") {
-                    // Start
-                    points.push({ x: centerX, y: relativeBottom - 100 });
-                } else if (id === "contacto") {
-                    // Drive DEEPER into parking (Inside the form area essentially)
-                    const entryX = rightX;
-
-                    // Move in to the section
-                    points.push({ x: entryX, y: sectionCenterY });
-
-                    // Final stop spot: Curve heavily into the block
-                    // Assuming contact form is on right or center, let's pull to center-right
-                    // relativeBottom is end of section. We want to stop before that.
-
-                    // Create a little "garage" curve?
-                    // Go down then hook left into the content?
-                    points.push({ x: entryX, y: relativeBottom - 150 });
-                    points.push({ x: entryX - 100, y: relativeBottom - 150 }); // Park horizontal
-                } else {
-                    const isRight = index % 2 !== 0;
-                    const targetX = isRight ? rightX : leftX;
-
-                    points.push({ x: targetX, y: relativeTop + 50 });
-                    points.push({ x: targetX, y: relativeBottom - 50 });
-                }
-            }
-        });
-
-        if (points.length < 2) return;
-
-        let d = `M ${points[0].x} ${points[0].y}`;
-
-        for (let i = 0; i < points.length - 1; i++) {
-            const p1 = points[i];
-            const p2 = points[i + 1];
-
-            const dx = p2.x - p1.x;
-            const absDx = Math.abs(dx);
-            const dy = p2.y - p1.y;
-
-            if (absDx < 50 && Math.abs(dy) > 50) {
-                // Vertical
-                d += ` L ${p2.x} ${p2.y}`;
-            } else if (Math.abs(dy) < 50) {
-                // Horizontal (Final Parking)
-                d += ` L ${p2.x} ${p2.y}`;
-            } else {
-                // Corners
-                const midY = (p1.y + p2.y) / 2;
-                const radius = 30;
-
-                d += ` L ${p1.x} ${midY - radius}`;
-                const turnDir = dx > 0 ? 1 : -1;
-                d += ` Q ${p1.x} ${midY} ${p1.x + turnDir * radius} ${midY}`;
-                d += ` L ${p2.x - turnDir * radius} ${midY}`;
-                d += ` Q ${p2.x} ${midY} ${p2.x} ${midY + radius}`;
-                d += ` L ${p2.x} ${p2.y}`;
-            }
-        }
-
-        setPathD(d);
-    };
-
-    useEffect(() => {
-        const timer = setTimeout(calculatePath, 100);
-        window.addEventListener("resize", calculatePath);
-        return () => {
-            clearTimeout(timer);
-            window.removeEventListener("resize", calculatePath);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (!pathD || !busRef.current || !maskCircleRef.current) return;
-
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: "body",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 0.5, // Reduced scrub for tighter sync ("no se queda atras")
-            }
-        });
-
-        // Motion Path for Bus
-        tl.to(busRef.current, {
-            motionPath: {
-                path: pathRef.current,
-                align: pathRef.current,
-                autoRotate: true,
-                alignOrigin: [0.5, 0.5],
-            },
-            ease: "none",
-            duration: 1
-        }, 0);
-
-        // Motion Path for Mask Circle (Hides the line)
-        // Must match bus movement exactly
-        tl.to(maskCircleRef.current, {
-            motionPath: {
-                path: pathRef.current,
-                align: pathRef.current,
-                autoRotate: true, // Rotation doesn't matter for circle but good for alignment logic
-                alignOrigin: [0.5, 0.5],
-            },
-            ease: "none",
-            duration: 1
-        }, 0);
-
-        // Hide at end
-        tl.to(busRef.current, {
-            opacity: 0,
-            scale: 0.8,
-            duration: 0.05, // Short fade relative to total
-            ease: "power1.in"
-        }, 0.95); // At 95% of progress
-
-        return () => {
-            if (tl.scrollTrigger) tl.scrollTrigger.kill();
-            tl.kill();
-        };
-    }, [pathD]);
+    // 2. Redefinición de la Ruta (SVG Path)
+    // viewBox="0 0 100 100"
+    // Inicio: M 50 0 (Centro Hero)
+    // Bajada inicial: Curva suave hacia un costado (digamos derecha 90)
+    // Zig-zag suave por los márgenes (10% y 90% en X)
+    // Bajando hasta el 100% en Y
+    const pathD = `
+        M 50 0 
+        C 50 5, 90 5, 90 15 
+        S 10 30, 10 45 
+        S 90 60, 90 75 
+        S 50 95, 50 100
+    `.replace(/\s+/g, ' ').trim();
 
     return (
+        // 3. Contenedor Elástico
         <div
-            ref={containerRef}
-            className="scroll-bus"
-            style={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                pointerEvents: "none",
-                zIndex: 1,
-                overflow: "hidden"
-            }}
+            className="absolute inset-0 z-30 pointer-events-none overflow-hidden"
+            style={{ width: "100%", height: "100%" }}
         >
             <svg
-                style={{
-                    width: "100%",
-                    height: "100%",
-                    overflow: "visible",
-                    position: 'absolute',
-                    top: 0,
-                    left: 0
-                }}
+                viewBox="0 0 100 100"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-full h-full"
+                preserveAspectRatio="none"
             >
-                <defs>
-                    <mask id="busMask">
-                        {/* White rect = show everything */}
-                        <rect x="-50%" y="-50%" width="200%" height="200%" fill="white" />
-                        {/* Black shape = hide this part (The Bus) */}
-                        {/* We use a group or just the circle. The circle moves via GSAP. */}
-                        <circle
-                            ref={maskCircleRef}
-                            r="35" // Slightly larger than bus half-width (60px / 2 = 30)
-                            fill="black"
-                        />
-                    </mask>
-                </defs>
-
+                {/* Visual Guide Rail (Opcional, para ver la ruta) */}
                 <path
-                    ref={pathRef}
                     d={pathD}
-                    fill="none"
                     stroke="#f59e0b"
-                    strokeWidth="5"
-                    strokeDasharray="15, 10"
+                    strokeWidth="0.2" // Más fino porque el viewBox es pequeño
+                    strokeDasharray="1 1"
                     strokeLinecap="round"
-                    style={{ opacity: 0.6 }}
-                    mask="url(#busMask)"
+                    strokeLinejoin="round"
+                    fill="none"
+                    opacity="0.4"
+                    vectorEffect="non-scaling-stroke"
                 />
             </svg>
 
-            <img
-                ref={busRef}
-                src={busIcon}
-                alt="Bus"
+            {/* THE BUS ACTOR */}
+            <motion.div
                 style={{
-                    width: "60px",
-                    height: "60px",
                     position: "absolute",
                     top: 0,
                     left: 0,
-                    transform: "translate(-50%, -50%)",
-                    opacity: pathD ? 1 : 0
+                    width: "60px",
+                    height: "60px",
+                    // El truco de offset-path en CSS nativo
+                    offsetPath: `path("${pathD}")`,
+                    offsetDistance: pathLength,
+                    offsetRotate: "auto 90deg", // Ajustar rotación si el SVG del bus apunta arriba/derecha
                 }}
-            />
+            >
+                <img
+                    src={busIcon}
+                    alt="Bus"
+                    className="w-full h-full drop-shadow-xl"
+                // Si el SVG original del bus apunta hacia arriba, y el camino baja, quizás necesite rotación extra.
+                // Asumiremos que el bus apunta a la derecha por defecto.
+                // Si offsetRotate es auto, alinea el eje X del elemento con la tangente.
+                />
+            </motion.div>
         </div>
     );
 }

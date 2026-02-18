@@ -6,17 +6,17 @@ const MarketAnalysis = () => {
         {
             icon: <ShieldCheck size={40} className="text-dtll-turquoise" />,
             title: "Profesionalización",
-            description: "Cumplimiento legal riguroso (Decreto 80) y estándares corporativos elevados para tu tranquilidad."
+            description: "Trabajamos bajo el Decreto 80 y estándares corporativos exigentes, asegurando formalidad y cumplimiento en cada servicio."
         },
         {
             icon: <UserCheck size={40} className="text-dtll-orange" />,
             title: "Experiencia del Pasajero",
-            description: "Entendemos que el traslado no es solo logística, es la extensión de su clima laboral y bienestar."
+            description: "Cuidamos cada viaje porque sabemos que impacta en las personas y en su jornada laboral."
         },
         {
             icon: <BarChart3 size={40} className="text-dtll-gold" />,
-            title: "Digitalización y Control",
-            description: "Tracking en tiempo real, reportabilidad detallada y transparencia total en cada kilómetro."
+            title: "Control y Coordinación",
+            description: "Supervisamos y coordinamos cada servicio con comunicación directa y seguimiento constante."
         }
     ];
 
@@ -26,7 +26,8 @@ const MarketAnalysis = () => {
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <h2 className="font-display text-4xl font-bold text-dtll-blue mb-4">Entendiendo el Mercado</h2>
                     <p className="text-lg text-dtll-gray">
-                        Sabemos que buscas más que un vehículo. Buscas un partner que entienda los desafíos de tu operación.
+                        No ofrecemos vehículos. <br />
+                        Ofrecemos experiencias de traslado diseñadas para que tu operación funcione sin interrupciones.
                     </p>
                 </div>
 

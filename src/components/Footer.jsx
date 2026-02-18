@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
 import logoOnly from '../assets/Logo_Only_DTLL.png';
 import LegalModal from './LegalModal';
 import { legalContent } from '../data/legalContent';
@@ -56,15 +56,14 @@ const Footer = () => {
                             <h4 className="font-display font-bold text-lg mb-6 text-dtll-turquoise">Legal</h4>
                             <ul className="space-y-4 text-sm text-gray-300 cursor-pointer">
                                 <li><button onClick={() => openLegalModal('terminos')} className="hover:text-white transition-colors text-left">Términos y Condiciones</button></li>
-                                <li><button onClick={() => openLegalModal('privacidad')} className="hover:text-white transition-colors text-left">Privacidad</button></li>
-                                <li><button onClick={() => openLegalModal('reglamento')} className="hover:text-white transition-colors text-left">Reglamento Interno</button></li>
+                                <li><button onClick={() => openLegalModal('privacidad')} className="hover:text-white transition-colors text-left">Política de Privacidad</button></li>
                             </ul>
                         </div>
 
                         {/* Contact */}
                         <div>
                             <h4 className="font-display font-bold text-lg mb-6 text-dtll-turquoise">Contacto</h4>
-                            <ul className="space-y-4 text-sm text-gray-300">
+                            <ul className="space-y-4 text-sm text-gray-300 mb-6">
                                 <li className="flex items-start gap-3">
                                     <Phone size={18} className="text-dtll-orange mt-1" />
                                     <span>+56 9 5439 0949</span>
@@ -78,6 +77,22 @@ const Footer = () => {
                                     <span>Región Metropolitana,<br />Chile</span>
                                 </li>
                             </ul>
+
+                            {/* WhatsApp QR & Link */}
+                            <div className="flex items-center gap-4 bg-white/5 p-3 rounded-xl border border-white/10">
+                                <img src="/src/assets/QR_DondeTeLlevo_CONTACTO.jpg" alt="QR WhatsApp" className="w-16 h-16 rounded-lg bg-white" />
+                                <div>
+                                    <p className="text-xs text-dtll-turquoise mb-1 font-bold">CONTACTO DIRECTO</p>
+                                    <a
+                                        href="https://wa.me/message/UJWAK6N7IUA2G1?src=qr"
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="text-sm text-white hover:text-dtll-orange transition-colors flex items-center gap-1"
+                                    >
+                                        Abrir WhatsApp <ArrowRight size={14} />
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
 

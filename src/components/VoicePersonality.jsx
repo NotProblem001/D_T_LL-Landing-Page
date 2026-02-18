@@ -4,16 +4,12 @@ import { CheckCircle2 } from 'lucide-react';
 const VoicePersonality = () => {
     const reasons = [
         {
-            title: "Seguridad y Puntualidad",
-            desc: "Nuestros protocolos son estrictos. Tu tiempo y tu integridad son innegociables para nosotros."
+            title: "Gestión Profesional",
+            desc: "Nos encargamos de planificar y coordinar cada servicio con estructura, control y comunicación clara."
         },
         {
-            title: "Trato Respetuoso y Humano",
-            desc: "Nuestros conductores son seleccionados no solo por su pericia al volante, sino por su calidad humana."
-        },
-        {
-            title: "Tecnología y Reportabilidad",
-            desc: "Plataforma de gestión, tracking GPS y reportes detallados para que siempre tengas el control."
+            title: "Respaldo y Confianza",
+            desc: "Operamos con cumplimiento normativo, equipo calificado y estándares definidos que aseguran seriedad en cada traslado."
         }
     ];
 
@@ -29,11 +25,12 @@ const VoicePersonality = () => {
                         ¿Por qué elegir <br />
                         <span className="text-dtll-turquoise">Donde Te Llevo?</span>
                     </h2>
-                    <p className="text-xl text-dtll-lilac mb-8">
-                        Porque entendemos que detrás de cada traslado hay una reunión importante, un evento especial o el regreso a casa de un equipo de trabajo.
+                    <p className="text-xl text-dtll-lilac mb-8 font-light">
+                        Porque cumplimos. <br />
+                        Llegamos a tiempo y hacemos que todo funcione.
                     </p>
                     <div className="inline-block border-l-4 border-dtll-orange pl-6 py-2">
-                        <p className="font-display text-2xl font-bold italic">"Tu viaje, nuestro compromiso"</p>
+                        <p className="font-display text-2xl font-bold italic">"La decisión es tuya. La responsabilidad, nuestra."</p>
                     </div>
                 </div>
 
@@ -50,7 +47,6 @@ const VoicePersonality = () => {
                         </div>
                     ))}
                 </div>
-
             </div>
         </section>
     );
