@@ -6,6 +6,15 @@ import es from 'date-fns/locale/es';
 
 registerLocale('es', es);
 
+const InputGroup = ({ icon: Icon, children }) => (
+    <div className="relative">
+        <div className="absolute left-3 top-1/2 -translate-y-1/2 text-dtll-blue/60 pointer-events-none">
+            <Icon size={18} />
+        </div>
+        {children}
+    </div>
+);
+
 const ServiceForms = ({ isOpen, onClose, type }) => {
     const [formData, setFormData] = useState({});
 
@@ -13,7 +22,9 @@ const ServiceForms = ({ isOpen, onClose, type }) => {
     useEffect(() => {
         if (isOpen) {
             document.body.style.overflow = 'hidden';
-            // Set default dates if needed
+            if (type === 'puntual' && !formData.tipo_viaje) {
+                setFormData(prev => ({ ...prev, tipo_viaje: 'ida' }));
+            }
         } else {
             document.body.style.overflow = 'unset';
             setFormData({});
@@ -123,14 +134,7 @@ const ServiceForms = ({ isOpen, onClose, type }) => {
         }
     };
 
-    const InputGroup = ({ icon: Icon, children }) => (
-        <div className="relative">
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-dtll-blue/60 pointer-events-none">
-                <Icon size={18} />
-            </div>
-            {children}
-        </div>
-    );
+
 
     return (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
@@ -154,13 +158,13 @@ const ServiceForms = ({ isOpen, onClose, type }) => {
                                     </h4>
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <InputGroup icon={User}>
-                                            <input required name="nombre" placeholder="Nombre completo *" className="input-field pl-10" onChange={handleChange} />
+                                            <input required name="nombre" value={formData.nombre || ''} placeholder="Nombre completo *" className="input-field pl-10" onChange={handleChange} />
                                         </InputGroup>
                                         <InputGroup icon={Mail}>
-                                            <input required type="email" name="email" placeholder="Email *" className="input-field pl-10" onChange={handleChange} />
+                                            <input required type="email" name="email" value={formData.email || ''} placeholder="Email *" className="input-field pl-10" onChange={handleChange} />
                                         </InputGroup>
                                         <InputGroup icon={Phone}>
-                                            <input required type="tel" name="telefono" placeholder="Teléfono *" className="input-field pl-10" onChange={handleChange} />
+                                            <input required type="tel" name="telefono" value={formData.telefono || ''} placeholder="Teléfono *" className="input-field pl-10" onChange={handleChange} />
                                         </InputGroup>
                                     </div>
                                 </div>
@@ -171,25 +175,25 @@ const ServiceForms = ({ isOpen, onClose, type }) => {
                                     </h4>
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <InputGroup icon={MapPin}>
-                                            <input required name="origen" placeholder="Dirección de Origen *" className="input-field pl-10" onChange={handleChange} />
+                                            <input required name="origen" value={formData.origen || ''} placeholder="Dirección de Origen *" className="input-field pl-10" onChange={handleChange} />
                                         </InputGroup>
                                         <InputGroup icon={MapPin}>
-                                            <input required name="destino" placeholder="Dirección de Destino *" className="input-field pl-10" onChange={handleChange} />
+                                            <input required name="destino" value={formData.destino || ''} placeholder="Dirección de Destino *" className="input-field pl-10" onChange={handleChange} />
                                         </InputGroup>
                                     </div>
                                     <div className="flex gap-4">
                                         <InputGroup icon={User}>
-                                            <input required type="number" name="pasajeros" placeholder="Pasajeros" className="input-field pl-10 w-full" onChange={handleChange} min="1" />
+                                            <input required type="number" name="pasajeros" value={formData.pasajeros || ''} placeholder="Pasajeros" className="input-field pl-10 w-full" onChange={handleChange} min="1" />
                                         </InputGroup>
                                         <label className="flex items-center gap-2 text-sm text-gray-600 bg-gray-50 px-4 rounded-lg cursor-pointer border border-gray-200 w-full hover:bg-gray-100 transition-colors">
-                                            <input type="checkbox" name="paradas" className="accent-dtll-orange w-4 h-4" onChange={handleChange} />
+                                            <input type="checkbox" name="paradas" checked={formData.paradas || false} className="accent-dtll-orange w-4 h-4" onChange={handleChange} />
                                             ¿Paradas intermedias?
                                         </label>
                                     </div>
 
                                     {formData.paradas && (
                                         <InputGroup icon={MapPin}>
-                                            <input name="direcciones_paradas" placeholder="Indicar direcciones de paradas..." className="input-field pl-10" onChange={handleChange} />
+                                            <input name="direcciones_paradas" value={formData.direcciones_paradas || ''} placeholder="Indicar direcciones de paradas..." className="input-field pl-10" onChange={handleChange} />
                                         </InputGroup>
                                     )}
 
@@ -226,13 +230,13 @@ const ServiceForms = ({ isOpen, onClose, type }) => {
                                     <div className="flex gap-6 justify-center py-2">
                                         <label className="flex items-center gap-2 cursor-pointer group">
                                             <div className="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center group-hover:border-dtll-orange transition-colors">
-                                                <input type="radio" name="tipo_viaje" value="ida" defaultChecked onChange={handleChange} className="appearance-none w-3 h-3 rounded-full checked:bg-dtll-orange" />
+                                                <input type="radio" name="tipo_viaje" value="ida" checked={formData.tipo_viaje === 'ida'} onChange={handleChange} className="appearance-none w-3 h-3 rounded-full checked:bg-dtll-orange" />
                                             </div>
                                             <span className="group-hover:text-dtll-blue transition-colors">Solo Ida</span>
                                         </label>
                                         <label className="flex items-center gap-2 cursor-pointer group">
                                             <div className="w-5 h-5 rounded-full border-2 border-gray-300 flex items-center justify-center group-hover:border-dtll-orange transition-colors">
-                                                <input type="radio" name="tipo_viaje" value="ida_vuelta" onChange={handleChange} className="appearance-none w-3 h-3 rounded-full checked:bg-dtll-orange" />
+                                                <input type="radio" name="tipo_viaje" value="ida_vuelta" checked={formData.tipo_viaje === 'ida_vuelta'} onChange={handleChange} className="appearance-none w-3 h-3 rounded-full checked:bg-dtll-orange" />
                                             </div>
                                             <span className="group-hover:text-dtll-blue transition-colors">Ida y Vuelta</span>
                                         </label>
@@ -270,7 +274,7 @@ const ServiceForms = ({ isOpen, onClose, type }) => {
                                         </div>
                                     )}
                                 </div>
-                                <textarea name="comentarios" placeholder="Comentarios adicionales..." className="input-field h-24 pt-3" onChange={handleChange}></textarea>
+                                <textarea name="comentarios" value={formData.comentarios || ''} placeholder="Comentarios adicionales..." className="input-field h-24 pt-3" onChange={handleChange}></textarea>
                             </>
                         )}
 
@@ -282,20 +286,20 @@ const ServiceForms = ({ isOpen, onClose, type }) => {
                                     </h4>
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <InputGroup icon={Briefcase}>
-                                            <input required name="empresa" placeholder="Empresa *" className="input-field pl-10" onChange={handleChange} />
+                                            <input required name="empresa" value={formData.empresa || ''} placeholder="Empresa *" className="input-field pl-10" onChange={handleChange} />
                                         </InputGroup>
                                         <InputGroup icon={User}>
-                                            <input required name="contacto" placeholder="Nombre contacto *" className="input-field pl-10" onChange={handleChange} />
+                                            <input required name="contacto" value={formData.contacto || ''} placeholder="Nombre contacto *" className="input-field pl-10" onChange={handleChange} />
                                         </InputGroup>
                                         <InputGroup icon={Mail}>
-                                            <input required type="email" name="email" placeholder="Email *" className="input-field pl-10" onChange={handleChange} />
+                                            <input required type="email" name="email" value={formData.email || ''} placeholder="Email *" className="input-field pl-10" onChange={handleChange} />
                                         </InputGroup>
                                         <InputGroup icon={Phone}>
-                                            <input required type="tel" name="telefono" placeholder="Teléfono *" className="input-field pl-10" onChange={handleChange} />
+                                            <input required type="tel" name="telefono" value={formData.telefono || ''} placeholder="Teléfono *" className="input-field pl-10" onChange={handleChange} />
                                         </InputGroup>
                                     </div>
                                     <InputGroup icon={FileText}>
-                                        <input name="cargo" placeholder="Cargo (Opcional)" className="input-field pl-10" onChange={handleChange} />
+                                        <input name="cargo" value={formData.cargo || ''} placeholder="Cargo (Opcional)" className="input-field pl-10" onChange={handleChange} />
                                     </InputGroup>
                                 </div>
                                 <div className="space-y-4">
@@ -304,7 +308,7 @@ const ServiceForms = ({ isOpen, onClose, type }) => {
                                     </h4>
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <div className="relative">
-                                            <select name="tipo_traslado" className="input-field appearance-none" onChange={handleChange} defaultValue="">
+                                            <select name="tipo_traslado" value={formData.tipo_traslado || ''} className="input-field appearance-none" onChange={handleChange}>
                                                 <option value="" disabled>Tipo de Traslado</option>
                                                 <option value="Acercamiento Metro">Acercamiento Metro</option>
                                                 <option value="Domicilio-Empresa">Domicilio - Empresa</option>
@@ -314,12 +318,12 @@ const ServiceForms = ({ isOpen, onClose, type }) => {
                                             <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" size={18} />
                                         </div>
                                         <InputGroup icon={MapPin}>
-                                            <input required name="comunas" placeholder="Comunas Involucradas *" className="input-field pl-10" onChange={handleChange} />
+                                            <input required name="comunas" value={formData.comunas || ''} placeholder="Comunas Involucradas *" className="input-field pl-10" onChange={handleChange} />
                                         </InputGroup>
                                     </div>
                                     <div className="grid md:grid-cols-2 gap-4">
                                         <InputGroup icon={User}>
-                                            <input required name="pasajeros" placeholder="N° Pasajeros aprox *" className="input-field pl-10" onChange={handleChange} />
+                                            <input required name="pasajeros" value={formData.pasajeros || ''} placeholder="N° Pasajeros aprox *" className="input-field pl-10" onChange={handleChange} />
                                         </InputGroup>
                                         <InputGroup icon={Calendar}>
                                             <DatePicker
@@ -334,15 +338,15 @@ const ServiceForms = ({ isOpen, onClose, type }) => {
                                         </InputGroup>
                                     </div>
                                     <InputGroup icon={Clock}>
-                                        <input required name="turno" placeholder="Tipo de Turno (Fijo, Rotativo, etc)" className="input-field pl-10" onChange={handleChange} />
+                                        <input required name="turno" value={formData.turno || ''} placeholder="Tipo de Turno (Fijo, Rotativo, etc)" className="input-field pl-10" onChange={handleChange} />
                                     </InputGroup>
                                     <InputGroup icon={Clock}>
-                                        <input required name="horarios" placeholder="Horarios de entrada/salida" className="input-field pl-10" onChange={handleChange} />
+                                        <input required name="horarios" value={formData.horarios || ''} placeholder="Horarios de entrada/salida" className="input-field pl-10" onChange={handleChange} />
                                     </InputGroup>
                                     <InputGroup icon={Calendar}>
-                                        <input required name="dias" placeholder="Días de operación (ej: Lun a Vie)" className="input-field pl-10" onChange={handleChange} />
+                                        <input required name="dias" value={formData.dias || ''} placeholder="Días de operación (ej: Lun a Vie)" className="input-field pl-10" onChange={handleChange} />
                                     </InputGroup>
-                                    <textarea required name="necesidad" placeholder="Describe brevemente la necesidad..." className="input-field h-24 pt-3" onChange={handleChange}></textarea>
+                                    <textarea required name="necesidad" value={formData.necesidad || ''} placeholder="Describe brevemente la necesidad..." className="input-field h-24 pt-3" onChange={handleChange}></textarea>
                                 </div>
                             </>
                         )}
@@ -350,18 +354,18 @@ const ServiceForms = ({ isOpen, onClose, type }) => {
                         {type === 'asesoria' && (
                             <div className="space-y-4">
                                 <InputGroup icon={User}>
-                                    <input required name="nombre" placeholder="Nombre *" className="input-field pl-10" onChange={handleChange} />
+                                    <input required name="nombre" value={formData.nombre || ''} placeholder="Nombre *" className="input-field pl-10" onChange={handleChange} />
                                 </InputGroup>
                                 <InputGroup icon={Briefcase}>
-                                    <input required name="empresa" placeholder="Empresa *" className="input-field pl-10" onChange={handleChange} />
+                                    <input required name="empresa" value={formData.empresa || ''} placeholder="Empresa *" className="input-field pl-10" onChange={handleChange} />
                                 </InputGroup>
                                 <InputGroup icon={Mail}>
-                                    <input required type="email" name="email" placeholder="Email *" className="input-field pl-10" onChange={handleChange} />
+                                    <input required type="email" name="email" value={formData.email || ''} placeholder="Email *" className="input-field pl-10" onChange={handleChange} />
                                 </InputGroup>
                                 <InputGroup icon={Phone}>
-                                    <input required type="tel" name="telefono" placeholder="Teléfono *" className="input-field pl-10" onChange={handleChange} />
+                                    <input required type="tel" name="telefono" value={formData.telefono || ''} placeholder="Teléfono *" className="input-field pl-10" onChange={handleChange} />
                                 </InputGroup>
-                                <textarea required name="descripcion" placeholder="¿En qué podemos ayudarte?" className="input-field h-32 pt-3" onChange={handleChange}></textarea>
+                                <textarea required name="descripcion" value={formData.descripcion || ''} placeholder="¿En qué podemos ayudarte?" className="input-field h-32 pt-3" onChange={handleChange}></textarea>
                             </div>
                         )}
 

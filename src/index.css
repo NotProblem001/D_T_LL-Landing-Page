@@ -44,6 +44,10 @@
   .section-container {
     @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16;
   }
+
+  .input-field {
+    @apply w-full rounded-lg border border-gray-200 bg-gray-50 px-4 py-3 text-gray-700 outline-none transition-all focus:border-dtll-blue focus:ring-2 focus:ring-dtll-blue/20;
+  }
 }
 
 /* Custom DatePicker Styles */
