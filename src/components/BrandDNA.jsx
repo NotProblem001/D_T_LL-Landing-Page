@@ -46,7 +46,7 @@ const BrandDNA = () => {
                             <h3 className="font-display text-3xl font-bold text-dtll-blue">Visión</h3>
                         </div>
                         <p className="text-dtll-gray text-lg leading-relaxed">
-                            Ser el referente en transporte privado para personas y organizaciones, reconocidos por nuestra excelencia operativa y experiencia de servicio.
+                            Consolidarnos como el referente en transporte privado para personas y organizaciones, reconocidos por nuestra excelencia operativa y experiencia de servicio.
                         </p>
                     </div>
                 </div>
