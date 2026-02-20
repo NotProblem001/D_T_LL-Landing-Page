@@ -16,7 +16,7 @@ export default function ScrollBus() {
     const pathD = "M 57 15.8 L 57 17.5 Q 57 19.5, 59 19.5 L 93 19.5 Q 95 19.5, 95 21.5 L 95 32.3 Q 95 34.3, 93 34.3 L 6 34.3 Q 4 34.3, 4 36.3 L 4 50.2 Q 4 52.2, 6 52.2 L 93 52.2 Q 95 52.2, 95 54.2 L 95 60.5 Q 95 62.5, 93 62.5 L 6 62.5 Q 4 62.5, 4 64.5 L 4 73 Q 4 75, 6 75 L 22.1 75";
 
     return (
-        <div className="absolute inset-0 w-full h-full pointer-events-none z-40">
+        <div className="hidden md:block absolute inset-0 w-full h-full pointer-events-none z-40">
             <svg
                 viewBox="0 0 100 100"
                 fill="none"

@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import HeroImage from '../assets/DTLL_PromocionPrincipal.png';
 import logoName from '../assets/Logo_NameSubtitle_DTLL.png';
@@ -23,9 +24,25 @@ const Hero = () => {
                     </div>
 
                     <h1 className="font-display font-bold text-5xl md:text-6xl lg:text-7xl leading-tight text-dtll-blue">
-                        Más que transporte, <span className="text-dtll-orange relative">tu aliado
-                            <svg className="absolute w-full h-3 -bottom-1 left-0 text-dtll-gold opacity-60" viewBox="0 0 100 10" preserveAspectRatio="none">
-                                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="3" fill="none" />
+                        Más que transporte,{' '}
+                        <span className="relative inline-block text-dtll-orange">
+                            tu aliado
+                            <svg
+                                viewBox="0 0 286 73"
+                                fill="none"
+                                className="absolute -left-6 -right-6 -top-4 -bottom-4 w-[125%] h-[100%] translate-y-2"
+                            >
+                                <motion.path
+                                    initial={{ pathLength: 0 }}
+                                    whileInView={{ pathLength: 1 }}
+                                    transition={{
+                                        duration: 2,
+                                        ease: "easeInOut",
+                                    }}
+                                    d="M142.293 1C106.854 16.8908 6.08202 7.17705 1.23654 43.3756C-2.10604 68.3466 29.5633 73.2652 122.688 71.7518C215.814 70.2384 316.298 70.689 275.761 38.0785C230.14 1.37835 97.0503 24.4575 52.9384 1"
+                                    stroke="#ed6f32"
+                                    strokeWidth="3"
+                                />
                             </svg>
                         </span>
                     </h1>

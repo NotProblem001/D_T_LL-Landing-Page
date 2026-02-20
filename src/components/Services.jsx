@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Calendar, Building2, ArrowRight, MessageSquareText } from 'lucide-react';
 import ServiceForms from './ServiceForms';
 
@@ -23,10 +24,30 @@ const Services = () => {
                 </div>
 
                 {/* Cards Grid */}
-                <div className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto">
+                <motion.div
+                    className="grid md:grid-cols-2 gap-8 lg:gap-12 max-w-5xl mx-auto"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    variants={{
+                        hidden: { opacity: 0 },
+                        visible: {
+                            opacity: 1,
+                            transition: {
+                                staggerChildren: 0.2
+                            }
+                        }
+                    }}
+                >
 
                     {/* Card 1: Traslados Puntuales */}
-                    <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 flex flex-col group">
+                    <motion.div
+                        className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-all duration-300 flex flex-col group"
+                        variants={{
+                            hidden: { opacity: 0, y: 50 },
+                            visible: { opacity: 1, y: 0, transition: { duration: 1 } }
+                        }}
+                    >
                         <div className="bg-dtll-turquoise/10 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-dtll-turquoise/20 transition-colors">
                             <Calendar className="text-dtll-turquoise" size={32} />
                         </div>
@@ -51,10 +72,16 @@ const Services = () => {
                             Cotizar traslado puntual
                             <ArrowRight size={20} />
                         </button>
-                    </div>
+                    </motion.div>
 
                     {/* Card 2: Transporte Corporativo */}
-                    <div className="bg-dtll-blue rounded-3xl p-8 shadow-xl border border-dtll-blue hover:shadow-2xl transition-all duration-300 flex flex-col relative overflow-hidden group">
+                    <motion.div
+                        className="bg-dtll-blue rounded-3xl p-8 shadow-xl border border-dtll-blue hover:shadow-2xl transition-all duration-300 flex flex-col relative overflow-hidden group"
+                        variants={{
+                            hidden: { opacity: 0, y: 50 },
+                            visible: { opacity: 1, y: 0, transition: { duration: 1 } }
+                        }}
+                    >
                         {/* Decorative bg */}
                         <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -mr-12 -mt-12 pointer-events-none"></div>
 
@@ -89,12 +116,18 @@ const Services = () => {
                                 Agendar reunión
                             </button>
                         </div>
-                    </div>
+                    </motion.div>
 
-                </div>
+                </motion.div>
 
                 {/* Banner Asesoría */}
-                <div className="max-w-4xl mx-auto mt-20 bg-white rounded-2xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-8">
+                <motion.div
+                    className="max-w-4xl mx-auto mt-20 bg-white rounded-2xl p-8 shadow-lg border border-gray-100 flex flex-col md:flex-row items-center justify-between gap-8"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.4, duration: 1 }}
+                >
                     <div className="flex items-start gap-4">
                         <div className="bg-dtll-gold/10 p-4 rounded-full">
                             <MessageSquareText className="text-dtll-gold" size={32} />
@@ -112,7 +145,7 @@ const Services = () => {
                     >
                         Solicitar Asesoría
                     </button>
-                </div>
+                </motion.div>
 
             </div>
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Heart, Shield, Users, Clock } from 'lucide-react';
 
 const BrandDNA = () => {
@@ -13,7 +14,13 @@ const BrandDNA = () => {
             <div className="container mx-auto px-6 relative z-10">
 
                 {/* Purpose */}
-                <div className="text-center max-w-4xl mx-auto mb-20 animate-fade-in-up">
+                <motion.div
+                    className="text-center max-w-4xl mx-auto mb-20"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 1 }}
+                >
                     <span className="text-dtll-orange font-bold tracking-wider uppercase text-sm mb-4 block">Nuestro Propósito</span>
                     <h2 className="font-display text-4xl md:text-5xl font-bold text-dtll-blue mb-6">
                         Crear conexiones humanas a través del movimiento
@@ -22,11 +29,17 @@ const BrandDNA = () => {
                         Existimos para transformar el traslado en una experiencia que suma valor.
                         No solo conectamos puntos en el mapa; protegemos a las personas, cuidamos los procesos y respaldamos tu operación en cada kilómetro.
                     </p>
-                </div>
+                </motion.div>
 
                 {/* Mission & Vision */}
                 <div className="grid md:grid-cols-2 gap-12 mb-20">
-                    <div className="bg-white p-10 rounded-3xl shadow-lg border-l-8 border-dtll-blue transform hover:-translate-y-1 transition-all duration-300">
+                    <motion.div
+                        className="bg-white p-10 rounded-3xl shadow-lg border-l-8 border-dtll-blue transform hover:-translate-y-1 transition-all duration-300"
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1 }}
+                    >
                         <div className="flex items-center gap-4 mb-4">
                             <div className="bg-dtll-blue/10 p-3 rounded-full">
                                 <Shield className="text-dtll-blue" size={28} />
@@ -36,9 +49,15 @@ const BrandDNA = () => {
                         <p className="text-dtll-gray text-lg leading-relaxed">
                             Ser el referente en transporte privado para personas y organizaciones, reconocidos por nuestra excelencia operativa y experiencia de servicio.
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="bg-white p-10 rounded-3xl shadow-lg border-l-8 border-dtll-gold transform hover:-translate-y-1 transition-all duration-300">
+                    <motion.div
+                        className="bg-white p-10 rounded-3xl shadow-lg border-l-8 border-dtll-gold transform hover:-translate-y-1 transition-all duration-300"
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 1.5, delay: 0.2 }}
+                    >
                         <div className="flex items-center gap-4 mb-4">
                             <div className="bg-dtll-gold/10 p-3 rounded-full">
                                 <Heart className="text-dtll-gold" size={28} />
@@ -48,7 +67,7 @@ const BrandDNA = () => {
                         <p className="text-dtll-gray text-lg leading-relaxed">
                             Consolidarnos como el referente en transporte privado para personas y organizaciones, reconocidos por nuestra excelencia operativa y experiencia de servicio.
                         </p>
-                    </div>
+                    </motion.div>
                 </div>
 
             </div>
