@@ -226,7 +226,7 @@ export default function Profile() {
                             {/* Status Message */}
                             {status.message && (
                                 <div className={`mt-6 p-4 rounded text-center font-bold ${status.type === 'success' ? 'bg-green-100 text-green-800' :
-                                        status.type === 'error' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'
+                                    status.type === 'error' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'
                                     }`}>
                                     {status.message}
                                 </div>

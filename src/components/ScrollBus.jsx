@@ -2,34 +2,21 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import busIcon from "../assets/bus.svg";
 
 export default function ScrollBus() {
-    // 1. Lógica de Movimiento (Framer Motion)
-    // Usa el hook useScroll sin target específico para scroll global
     const { scrollYProgress } = useScroll();
 
-    // Mapea 0 (inicio página) a 1 (final página) -> 0% a 100% del recorrido
-    // Transformación directa como pidió el usuario CRÍTICAMENTE.
-    const pathLength = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+    // Transformamos el scroll 0-1 a porcentaje 0%-100% para 'offsetDistance'
+    // Aceleración al final: Mapeamos para que llegue al 100% del recorrido antes de terminar el scroll (ej: al 90%)
+    const pathLength = useTransform(scrollYProgress, [0, 0.9], ["-5%", "110%"]);
 
-    // 2. Redefinición de la Ruta (SVG Path)
-    // viewBox="0 0 100 100"
-    // Inicio: M 50 0 (Centro Hero)
-    // Bajada inicial: Curva suave hacia un costado (digamos derecha 90)
-    // Zig-zag suave por los márgenes (10% y 90% en X)
-    // Bajando hasta el 100% en Y
-    const pathD = `
-        M 50 0 
-        C 50 5, 90 5, 90 15 
-        S 10 30, 10 45 
-        S 90 60, 90 75 
-        S 50 95, 50 100
-    `.replace(/\s+/g, ' ').trim();
+    // Opacidad: 0 al inicio, 1 rápido, se mantiene casi hasta el final (0.8), y desaparece antes (0.85)
+    // Ajustado para que se desvanezca "un poco antes" como pidió el usuario, manteniendo la velocidad visual
+    const busOpacity = useTransform(scrollYProgress, [0, 0.05, 0.8, 0.95], [0, 1, 1, 0]);
+
+    // Ruta original de Mati, mejorada con curvas 'Q' para giros fluidos del autobús
+    const pathD = "M 57 15.8 L 57 17.5 Q 57 19.5, 59 19.5 L 93 19.5 Q 95 19.5, 95 21.5 L 95 32.3 Q 95 34.3, 93 34.3 L 6 34.3 Q 4 34.3, 4 36.3 L 4 50.2 Q 4 52.2, 6 52.2 L 93 52.2 Q 95 52.2, 95 54.2 L 95 60.5 Q 95 62.5, 93 62.5 L 6 62.5 Q 4 62.5, 4 64.5 L 4 73 Q 4 75, 6 75 L 22.1 75";
 
     return (
-        // 3. Contenedor Elástico
-        <div
-            className="absolute inset-0 z-30 pointer-events-none overflow-hidden"
-            style={{ width: "100%", height: "100%" }}
-        >
+        <div className="absolute inset-0 w-full h-full pointer-events-none z-40">
             <svg
                 viewBox="0 0 100 100"
                 fill="none"
@@ -37,43 +24,49 @@ export default function ScrollBus() {
                 className="w-full h-full"
                 preserveAspectRatio="none"
             >
-                {/* Visual Guide Rail (Opcional, para ver la ruta) */}
+                {/* 1. Base de la calle (Gris medio) */}
                 <path
+                    id="ruta-bus"
                     d={pathD}
-                    stroke="#f59e0b"
-                    strokeWidth="0.2" // Más fino porque el viewBox es pequeño
-                    strokeDasharray="1 1"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
+                    stroke="#6e6e6b"
+                    strokeWidth="4"
+                    opacity="0.1"
                     fill="none"
-                    opacity="0.4"
                     vectorEffect="non-scaling-stroke"
                 />
-            </svg>
 
-            {/* THE BUS ACTOR */}
-            <motion.div
-                style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "60px",
-                    height: "60px",
-                    // El truco de offset-path en CSS nativo
-                    offsetPath: `path("${pathD}")`,
-                    offsetDistance: pathLength,
-                    offsetRotate: "auto 90deg", // Ajustar rotación si el SVG del bus apunta arriba/derecha
-                }}
-            >
-                <img
-                    src={busIcon}
-                    alt="Bus"
-                    className="w-full h-full drop-shadow-xl"
-                // Si el SVG original del bus apunta hacia arriba, y el camino baja, quizás necesite rotación extra.
-                // Asumiremos que el bus apunta a la derecha por defecto.
-                // Si offsetRotate es auto, alinea el eje X del elemento con la tangente.
+                {/* 2. Línea punteada central (Oro Real) */}
+                <path
+                    d={pathD}
+                    stroke="#ffc914"
+                    strokeWidth="4"
+                    strokeDasharray="13 16"
+                    opacity="0.8"
+                    fill="none"
+                    vectorEffect="non-scaling-stroke"
                 />
-            </motion.div>
+
+                {/* 3. El Autobús animado seguidor */}
+                <motion.g
+                    style={{
+                        offsetPath: "url(#ruta-bus)",
+                        offsetDistance: pathLength,
+                        offsetRotate: "auto 0deg", // Ajuste para que el frente del bus siga la línea
+                        opacity: busOpacity
+                    }}
+                >
+                    {/* Icono del Bus */}
+                    {/* width/height="4" y x/y="-2" para centrarlo en el path */}
+                    <image
+                        href={busIcon}
+                        width="2.5"
+                        height="2.5"
+                        x="-1.25"
+                        y="-1.25"
+                        preserveAspectRatio="xMidYMid meet"
+                    />
+                </motion.g>
+            </svg>
         </div>
     );
 }
