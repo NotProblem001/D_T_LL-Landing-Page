@@ -16,7 +16,7 @@ const Services = () => {
                 {/* Header */}
                 <div className="text-center max-w-3xl mx-auto mb-16">
                     <span className="text-dtll-orange font-bold tracking-wider uppercase text-sm mb-2 block">SOLUCIONES A MEDIDA</span>
-                    <h2 className="font-display text-4xl md:text-5xl font-bold text-dtll-blue mb-6">NUESTROS SERVICIOS</h2>
+                    <h2 className="font-display text-4xl md:text-5xl font-bold text-dtll-blue mb-6">Soluciones de transporte para cada necesidad </h2>
                     <p className="text-xl text-dtll-gray leading-relaxed">
                         Nos adaptamos a distintas necesidades de traslado. <br />
                         Selecciona la opción que mejor se ajuste a tu requerimiento.
@@ -53,7 +53,7 @@ const Services = () => {
                         </div>
                         <h3 className="font-display text-2xl font-bold text-dtll-blue mb-4">Traslados Puntuales</h3>
                         <p className="text-dtll-gray mb-6 flex-grow">
-                            Coordinamos servicios en fechas específicas para eventos, reuniones o necesidades particulares.
+                            Coordinamos traslados en fechas específicas para eventos, reuniones o necesidades puntuales.
                         </p>
 
                         <div className="bg-gray-50 rounded-xl p-5 mb-8 border border-gray-100">
@@ -90,7 +90,7 @@ const Services = () => {
                         </div>
                         <h3 className="font-display text-2xl font-bold text-white mb-4">Transporte Corporativo</h3>
                         <p className="text-gray-200 mb-6 flex-grow">
-                            Diseñamos soluciones de traslado para empresas que requieren movilizar trabajadores en turnos definidos o puntos estratégicos.
+                            Diseñamos soluciones de transporte para empresas que necesitan movilizar trabajadores en turnos definidos o entre distintos puntos de operación.
                         </p>
 
                         <div className="bg-white/5 rounded-xl p-5 mb-8 border border-white/10">

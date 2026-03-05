@@ -19,9 +19,11 @@ export default {
                 }
             },
             fontFamily: {
-                sans: ['Inter', 'system-ui', 'sans-serif'],
-                display: ['"ITC Avant Garde Gothic"', 'Questrial', 'sans-serif'],
-                body: ['Inter', 'sans-serif'],
+                sans: ['"ITC Avant Garde"', 'system-ui', 'sans-serif'],
+                display: ['"ITC Avant Garde"', 'sans-serif'],
+                body: ['"ITC Avant Garde"', 'sans-serif'],
+                'avant-garde-medium': ['"ITC Avant Garde Medium"', '"ITC Avant Garde"', 'sans-serif'],
+                'avant-garde-bold': ['"ITC Avant Garde Bold"', '"ITC Avant Garde"', 'sans-serif'],
             },
         },
     },

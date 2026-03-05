@@ -1,21 +1,26 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
+import { title } from 'framer-motion/client';
 
 const VoicePersonality = () => {
     const reasons = [
         {
             title: "Gestión Profesional",
-            desc: "Nos encargamos de planificar y coordinar cada servicio con estructura, control y comunicación clara."
+            desc: "Planificamos y coordinamos cada servicio con estructura, control y comunicación clara."
         },
         {
             title: "Respaldo y Confianza",
-            desc: "Operamos con cumplimiento normativo, equipo calificado y estándares definidos que aseguran seriedad en cada traslado."
+            desc: "Operamos con cumplimiento normativo, equipo calificado y estándares claros que aseguran un servicio confiable en cada traslado."
+        },
+        {
+            title: "Experiencia del pasajero",
+            desc: "Diseñamos cada traslado pensando en las personas, asegurando comodidad, seguridad y puntualidad en cada recorrido."
         }
     ];
 
     return (
-        <section className="py-24 bg-dtll-blue text-white relative overflow-hidden">
+        <section id="diferencia" className="py-24 bg-dtll-blue text-white relative overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 opacity-10" style={{ backgroundImage: 'radial-gradient(#68dfd5 1px, transparent 1px)', backgroundSize: '30px 30px' }}></div>
 
@@ -28,10 +33,10 @@ const VoicePersonality = () => {
                     transition={{ duration: 1 }}
                 >
                     <h2 className="font-display text-4xl md:text-5xl font-bold mb-8 leading-tight text-white">
-                        ¿Por qué elegir <br />
+                        ¿La diferencia de trabajar con<br />
                         <span className="text-dtll-turquoise">Donde Te Llevo?</span>
                     </h2>
-                    <p className="text-xl text-dtll-lilac mb-8 font-light">
+                    <p className="text-xl text-dtll-gold mb-8 font-light">
                         Porque cumplimos. <br />
                         Llegamos a tiempo y hacemos que todo funcione.
                     </p>

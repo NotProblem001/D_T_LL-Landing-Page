@@ -5,14 +5,11 @@ import BrandDNA from '../components/BrandDNA';
 import VoicePersonality from '../components/VoicePersonality';
 import Services from '../components/Services';
 import Footer from '../components/Footer';
-import ScrollBus from '../components/ScrollBus';
 
 export default function Home() {
 
   return (
     <main className="w-full bg-dtll-warmWhite relative">
-      <ScrollBus />
-
       <div id="hero">
         <Hero />
       </div>
