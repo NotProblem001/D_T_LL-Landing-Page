@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import logoMain from '../assets/Logo_Main_DTLL.png';
 
@@ -69,6 +70,11 @@ export default function Header() {
               </button>
             </li>
             <li>
+              <Link to="/perfil" className="hover:text-dtll-blue transition-colors">
+                Mi Cuenta
+              </Link>
+            </li>
+            <li>
               <button
                 onClick={() => scrollToSection('contact')}
                 className="btn-primary py-2 px-6 text-sm"
@@ -86,6 +92,7 @@ export default function Header() {
             <li><button onClick={() => scrollToSection('hero')}>Inicio</button></li>
             <li><button onClick={() => scrollToSection('market-analysis')}>Conócenos</button></li>
             <li><button onClick={() => scrollToSection('why-choose-us')}>Por qué Elegirnos</button></li>
+            <li><Link to="/perfil" onClick={() => setIsMenuOpen(false)}>Mi Cuenta</Link></li>
             <li>
               <button onClick={() => scrollToSection('contact')} className="btn-primary text-xl px-10 py-3">
                 Contáctanos

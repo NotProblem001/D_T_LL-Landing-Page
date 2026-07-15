@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080'; // Gateway URL
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080';
 
 const api = axios.create({
     baseURL: API_URL,
@@ -64,4 +64,10 @@ export const createBooking = async (bookingData) => {
     return await api.post('/bookings', bookingData);
 };
 
+export const obtenerUbicacionViaje = async (viajeId) => {
+    const response = await api.get(`/api/v1/tracking/${viajeId}`);
+    return response.data;
+};
+
+export { API_URL };
 export default api;

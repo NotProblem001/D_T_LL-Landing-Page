@@ -1,11 +1,25 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { createReport } from '../services/api';
 import { useNavigate } from 'react-router-dom';
 
+function usuarioDesdeSesion(navigate) {
+    const token = localStorage.getItem('jwt_token');
+    if (!token) {
+        navigate('/perfil');
+        return null;
+    }
+    try {
+        return jwtDecode(token);
+    } catch {
+        navigate('/perfil');
+        return null;
+    }
+}
+
 export default function Reports() {
-    const [user, setUser] = useState(null);
     const navigate = useNavigate();
+    const [user] = useState(() => usuarioDesdeSesion(navigate));
 
     // Report State
     const [category, setCategory] = useState('');
@@ -22,20 +36,6 @@ export default function Reports() {
     });
 
     const [status, setStatus] = useState({ type: '', message: '' });
-
-    useEffect(() => {
-        const token = localStorage.getItem('jwt_token');
-        if (token) {
-            try {
-                const decoded = jwtDecode(token);
-                setUser(decoded);
-            } catch (e) {
-                navigate('/profile');
-            }
-        } else {
-            navigate('/profile');
-        }
-    }, [navigate]);
 
     const handleReportSubmit = async (e) => {
         e.preventDefault();
@@ -64,7 +64,7 @@ export default function Reports() {
             setDetails({ subject: '', description: '', driverName: '', licensePlate: '', travelDate: '', incidentLocation: '' });
             setCategory('');
             setSubCategory('');
-        } catch (error) {
+        } catch {
             setStatus({ type: 'error', message: 'Error al enviar reporte.' });
         }
     };

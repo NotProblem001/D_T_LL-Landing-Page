@@ -1,36 +1,36 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import { loginWithGoogle, loginUser, registerUser, updateUser } from '../services/api';
 import AuthForms from '../components/AuthForms';
 
-export default function Profile() {
-    const [user, setUser] = useState(null);
-    const [isEditing, setIsEditing] = useState(false);
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phoneNumber: '',
-        rut: ''
-    });
-    const [status, setStatus] = useState({ type: '', message: '' });
-
-    useEffect(() => {
-        const token = localStorage.getItem('jwt_token');
-        if (token) {
-            try {
-                const decoded = jwtDecode(token);
-                setUser(decoded);
-                setFormData({
-                    name: decoded.name || '',
-                    email: decoded.email || decoded.sub || '',
-                    phoneNumber: decoded.phoneNumber || '',
-                    rut: decoded.rut || ''
-                });
-            } catch (e) {
-                localStorage.removeItem('jwt_token');
+function estadoInicial() {
+    const token = localStorage.getItem('jwt_token');
+    if (!token) {
+        return { user: null, formData: { name: '', email: '', phoneNumber: '', rut: '' } };
+    }
+    try {
+        const decoded = jwtDecode(token);
+        return {
+            user: decoded,
+            formData: {
+                name: decoded.name || '',
+                email: decoded.email || decoded.sub || '',
+                phoneNumber: decoded.phoneNumber || '',
+                rut: decoded.rut || ''
             }
-        }
-    }, []);
+        };
+    } catch {
+        localStorage.removeItem('jwt_token');
+        return { user: null, formData: { name: '', email: '', phoneNumber: '', rut: '' } };
+    }
+}
+
+export default function Profile() {
+    const [{ user: usuarioInicial, formData: formDataInicial }] = useState(estadoInicial);
+    const [user, setUser] = useState(usuarioInicial);
+    const [isEditing, setIsEditing] = useState(false);
+    const [formData, setFormData] = useState(formDataInicial);
+    const [status, setStatus] = useState({ type: '', message: '' });
 
     const processLogin = (token) => {
         if (token) {
@@ -89,12 +89,12 @@ export default function Profile() {
         e.preventDefault();
         setStatus({ type: 'loading', message: 'Guardando cambios...' });
         try {
-            await updateUser(formData);
+            await updateUser({ nombre: formData.name });
             setStatus({ type: 'success', message: 'Datos actualizados correctamente.' });
             setIsEditing(false);
             // In a real app, we might want to refresh the token if claims changed, 
             // but for now we just update local state visually if needed or assume token is still valid for identity.
-        } catch (error) {
+        } catch {
             setStatus({ type: 'error', message: 'Error al actualizar perfil.' });
         }
     };
@@ -134,7 +134,10 @@ export default function Profile() {
 
                         <div className="bg-white p-6 rounded-lg shadow-md mt-4">
                             <h3 className="font-bold text-gray-700 mb-3">Navegación</h3>
-                            <a href="/reports" className="block w-full text-left py-2 px-3 rounded hover:bg-gray-100 text-primary mb-1">
+                            <a href="/mi-viaje" className="block w-full text-left py-2 px-3 rounded hover:bg-gray-100 text-primary mb-1">
+                                📍 Mi Viaje en Vivo
+                            </a>
+                            <a href="/reportes" className="block w-full text-left py-2 px-3 rounded hover:bg-gray-100 text-primary mb-1">
                                 📋 Mis Reportes
                             </a>
                             <a href="/#contacto" className="block w-full text-left py-2 px-3 rounded hover:bg-gray-100 text-primary">

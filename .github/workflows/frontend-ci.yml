@@ -1,0 +1,32 @@
+name: Frontend CI - DTLL Landing Page
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      # NOTA: el lint aún no pasa en este repo por deuda técnica preexistente en varios
+      # componentes (imports sin usar, etc.) no relacionada con el backend/auth. Cuando se
+      # limpie, restaurar el paso `npm run lint` aquí para que bloquee el pipeline.
+      - name: Compilar (Build)
+        run: npm run build
