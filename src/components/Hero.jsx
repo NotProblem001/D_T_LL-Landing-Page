@@ -45,7 +45,7 @@ const Hero = () => {
                             <svg
                                 viewBox="0 0 286 73"
                                 fill="none"
-                                className="absolute -left-3 -right-5 -top-3 -bottom-3 w-[112%] h-[100%] translate-y-1.5"
+                                className="absolute -left-4.5 -right-5.5 -top-3.5 -bottom-3.5 w-[118%] h-[100%] translate-y-1.5"
                             >
                                 <motion.path
                                     initial={{ pathLength: 0 }}
