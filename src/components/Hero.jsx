@@ -60,7 +60,7 @@ const Hero = () => {
                                 />
                             </svg>
                         </span>
-                        {'  '}  , en cada traslado
+                        {'  '}   en cada traslado
                     </h1>
 
                     <p className="font-body text-xl text-dtll-gray max-w-lg leading-relaxed">
