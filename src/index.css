@@ -5,7 +5,7 @@
 
 @layer base {
   html {
-    font-family: 'ITC Avant Garde', system-ui, sans-serif;
+    font-family: 'Questrial', system-ui, sans-serif;
     color: #6e6e6b;
     /* Gris Medio default text */
     background-color: #fafaf7;
@@ -18,7 +18,7 @@
   h4,
   h5,
   h6 {
-    font-family: "ITC Avant Garde", sans-serif;
+    font-family: 'Questrial', system-ui, sans-serif;
     color: #31547f;
     /* Azul Profundo */
   }

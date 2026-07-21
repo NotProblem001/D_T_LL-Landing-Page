@@ -9,6 +9,8 @@ export default {
             colors: {
                 dtll: {
                     blue: '#31547f',      // Azul Profundo
+                    blueDark: '#274465',  // Variante oscura para hover/active
+                    blueLight: '#e8eef5', // Fondo suave para estados seleccionados
                     turquoise: '#68dfd5', // Turquesa
                     orange: '#ed6f32',    // Naranjo
                     gold: '#ffc914',      // Oro Real
@@ -19,11 +21,15 @@ export default {
                 }
             },
             fontFamily: {
-                sans: ['"ITC Avant Garde"', 'system-ui', 'sans-serif'],
-                display: ['"ITC Avant Garde"', 'sans-serif'],
-                body: ['"ITC Avant Garde"', 'sans-serif'],
-                'avant-garde-medium': ['"ITC Avant Garde Medium"', '"ITC Avant Garde"', 'sans-serif'],
-                'avant-garde-bold': ['"ITC Avant Garde Bold"', '"ITC Avant Garde"', 'sans-serif'],
+                // Questrial sustituye a ITC Avant Garde (comercial, nunca llegó a cargarse).
+                // Geométrica y de proporciones similares; disponible en Google Fonts.
+                sans: ['Questrial', 'system-ui', 'sans-serif'],
+                display: ['Questrial', 'system-ui', 'sans-serif'],
+                body: ['Questrial', 'system-ui', 'sans-serif'],
+                // Alias conservados para no romper el markup existente (ver Hero.jsx).
+                // Questrial tiene un solo peso: el énfasis se consigue con font-semibold/font-bold.
+                'avant-garde-medium': ['Questrial', 'system-ui', 'sans-serif'],
+                'avant-garde-bold': ['Questrial', 'system-ui', 'sans-serif'],
             },
         },
     },

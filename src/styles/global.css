@@ -20,7 +20,7 @@ html {
 
 body {
   margin: 0;
-  font-family: 'ITC Avant Garde', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Questrial', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background: var(--light-bg);
   color: var(--text-color);
   line-height: 1.6;
